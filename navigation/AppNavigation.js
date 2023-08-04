@@ -4,8 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import BillsScreen from '../screens/BillsScreen';
+import StatsScreen from '../screens/StatsScreen';
 import { LogBox, View } from 'react-native';
-import { HomeIcon, QueueListIcon } from 'react-native-heroicons/outline';
+import { HomeIcon, QueueListIcon, ChartPieIcon } from 'react-native-heroicons/outline';
 
 LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
 
@@ -26,6 +27,10 @@ const AppNavigation = () => {
           <HomeIcon color={'white'} size={25} />
         )}}
         component={HomeScreen} />
+        <Tab.Screen name="Stats" options={{ headerShown: false , tabBarLabel: '', tabBarIcon: ({color,size}) => (
+          <ChartPieIcon color={'white'} size={25} />
+        )}}
+        component={StatsScreen} />
         <Tab.Screen name="Bills" options={{ headerShown: false , tabBarLabel: '', tabBarIcon: ({color,size}) => (
           <QueueListIcon color={'white'} size={25} />
         )}}
