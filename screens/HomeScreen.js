@@ -59,8 +59,6 @@ export default function HomeScreen() {
                 </View>
                 <Text className="text-white text-2xl font-black">$ 69.00</Text>
               </View>
-              
-              
           </View>
       </ImageBackground>
     </View>

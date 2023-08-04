@@ -1,7 +1,6 @@
 import { View, Text, Image, ScrollView } from 'react-native'
 import React from 'react'
 import { ImageBackground } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
 
 export default function BillsScreen() {
   return (
