@@ -1,21 +1,36 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
-import { LogBox, Text, View } from 'react-native';
-
-const Stack = createNativeStackNavigator();
+import { LogBox, View } from 'react-native';
+import { HomeIcon } from 'react-native-heroicons/outline';
 
 LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
 
-export default function AppNavigation() {
+const Tab = createBottomTabNavigator();
+
+const AppNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome">
-        <Stack.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
-        <Stack.Screen name="Welcome" options={{ headerShown: false }} component={WelcomeScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator initialRouteName="Welcome" screenOptions={{
+   tabBarStyle: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    borderTopWidth: 0,
+    elevation: 0,
+},
+  }}>
+        <Tab.Screen name="Home" options={{ headerShown: false , tabBarLabel: '', tabBarIcon: ({color,size}) => (
+          <HomeIcon color={'white'} size={25} />
+        )}}
+        component={HomeScreen} />
+        <Tab.Screen name="Welcome" options={{ headerShown: false, tabBarStyle: {display: 'none'}, tabBarButton: () => (
+            <View style={{width:0, height:0}}></View>
+        ), }}  component={WelcomeScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default AppNavigation;

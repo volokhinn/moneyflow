@@ -3,14 +3,11 @@ import {
   Text,
   Image,
   ImageBackground,
-  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { ArrowRightIcon } from 'react-native-heroicons/outline';
 import { LinearGradient } from 'expo-linear-gradient';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function WelcomeScreen({ navigation }) {
   return (
