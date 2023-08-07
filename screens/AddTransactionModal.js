@@ -21,7 +21,7 @@ export default function AddTransactionModal({ isVisible, onClose }) {
         isIncome: isIncome,
       };
       if (amount && transactionName) {
-        const transactions = (await AsyncStorage.getItem('transactions')) ?? [];
+        const transactions = (await AsyncStorage.getItem('transactions')) ?? '[]';
         const updatedTransactions = transactions
           ? [...JSON.parse(transactions), transactionData]
           : [transactionData];
