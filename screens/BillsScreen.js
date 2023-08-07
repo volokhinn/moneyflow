@@ -1,29 +1,8 @@
 import { View, Text, Image, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ImageBackground } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function BillsScreen() {
-  const [transactions, setTransactions] = useState([]);
-
-  // Function to fetch transactions from AsyncStorage
-  const fetchTransactions = async () => {
-    try {
-      const transactionsData = await AsyncStorage.getItem('transactions');
-      if (transactionsData) {
-        const parsedTransactions = JSON.parse(transactionsData);
-        setTransactions(parsedTransactions);
-      }
-    } catch (error) {
-      console.error('Error fetching transactions:', error);
-    }
-  };
-
-  useEffect(() => {
-    // Fetch transactions when the component mounts
-    fetchTransactions();
-  }, []);
-
+export default function BillsScreen({ transactions }) {
   return (
     <>
       <View>
@@ -43,7 +22,7 @@ export default function BillsScreen() {
                 </View>
                 <Text className="text-white text-2xl font-black">
                   {transaction.isIncome ? '+ $' : '- $'}
-                  {Math.abs(transaction.amount)}
+                  {transaction.amount}
                 </Text>
               </View>
             ))}

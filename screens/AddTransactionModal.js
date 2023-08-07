@@ -3,11 +3,11 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import { BlurView } from 'expo-blur';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Checkbox } from 'expo-checkbox';
 import { KeyboardAvoidingView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function AddTransactionModal({ isVisible, onClose }) {
+export default function AddTransactionModal({ isVisible, onClose, onSaveTransaction }) {
   const [transactionName, setTransactionName] = useState('');
   const [amount, setAmount] = useState('');
   const [isIncome, setIsIncome] = useState(false);
@@ -21,12 +21,7 @@ export default function AddTransactionModal({ isVisible, onClose }) {
         isIncome: isIncome,
       };
       if (amount && transactionName) {
-        const transactions = (await AsyncStorage.getItem('transactions')) ?? '[]';
-        const updatedTransactions = transactions
-          ? [...JSON.parse(transactions), transactionData]
-          : [transactionData];
-        await AsyncStorage.setItem('transactions', JSON.stringify(updatedTransactions));
-        console.log('Transaction Saved:', transactionData);
+        await onSaveTransaction(transactionData);
       }
 
       setTransactionName('');
