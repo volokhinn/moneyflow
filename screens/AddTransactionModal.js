@@ -16,7 +16,7 @@ export default function AddTransactionModal({ isVisible, onClose, onSaveTransact
     try {
       const transactionData = {
         name: transactionName,
-        amount: isIncome ? amount : -amount,
+        amount: amount,
         date: new Date().toLocaleDateString('ru-RU'),
         isIncome: isIncome,
       };
@@ -41,7 +41,7 @@ export default function AddTransactionModal({ isVisible, onClose, onSaveTransact
       className="rounded-full">
       <KeyboardAvoidingView>
         <View
-          className="bg-opacity-50 h-full w-full p-4 rounded-2xl"
+          className="bg-opacity-50 h-fit w-full p-4 rounded-2xl"
           style={{ backgroundColor: 'rgba(255,255,255,0.3)', blur: 30 }}>
           {/* <TouchableOpacity onPress={onClose} className="self-end">
             <XMarkIcon size={25} color={'black'} />

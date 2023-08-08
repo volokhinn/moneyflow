@@ -93,9 +93,9 @@ const AppNavigation = () => {
             headerShown: false,
             tabBarLabel: '',
             tabBarIcon: ({ color, size }) => <HomeIcon color={'white'} size={25} />,
-          }}
-          component={HomeScreen}
-        />
+          }}>
+          {() => <HomeScreen transactions={transactions} />}
+        </Tab.Screen>
         <Tab.Screen
           name="Settings"
           options={{
