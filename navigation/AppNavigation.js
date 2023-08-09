@@ -34,9 +34,8 @@ const AppNavigation = () => {
     setModalVisible(false);
   };
 
-  // Функция для обновления списка транзакций после добавления новой транзакции
-  const updateTransactions = (newTransaction) => {
-    setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
+  const updateTransactions = (updatedTransactions) => {
+    setTransactions(updatedTransactions);
   };
 
   // Функция для получения транзакций из хранилища при загрузке компонента
@@ -65,14 +64,28 @@ const AppNavigation = () => {
         setTransactions(updatedTransactions);
         await AsyncStorage.setItem('transactions', JSON.stringify(updatedTransactions));
         console.log('Transaction Saved:', transactionData);
+
+        fetchTransactionDataByMonth(); // Обновляем данные для графика
       }
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
   };
 
-  const handleClearTransactions = () => {
-    setTransactions([]);
+  const handleClearTransactions = async () => {
+    try {
+      await AsyncStorage.removeItem('transactions');
+      setTransactions([]);
+      console.log('Transactions Cleared');
+
+      fetchTransactionDataByMonth(); // Обновляем данные для графика
+    } catch (error) {
+      console.error('Error clearing transactions:', error);
+    }
+  };
+
+  const fetchTransactionData = () => {
+    fetchTransactionDataByMonth(); // Здесь вызывается функция из компонента StatsScreen
   };
 
   return (
@@ -97,16 +110,24 @@ const AppNavigation = () => {
           {() => <HomeScreen transactions={transactions} />}
         </Tab.Screen>
         <Tab.Screen
-          name="Settings"
-          options={{
-            headerShown: false,
-            tabBarLabel: '',
-            tabBarIcon: ({ color, size }) => (
-              <AdjustmentsHorizontalIcon color={'white'} size={25} />
-            ),
-          }}>
-          {() => <SettingsScreen onClearTransactions={handleClearTransactions} />}
-        </Tab.Screen>
+  name="Settings"
+  options={{
+    headerShown: false,
+    tabBarLabel: '',
+    tabBarIcon: ({ color, size }) => (
+      <AdjustmentsHorizontalIcon color={'white'} size={25} />
+    ),
+  }}>
+  {() => (
+    <SettingsScreen
+      onClearTransactions={handleClearTransactions}
+      fetchTransactionData={fetchTransactionData}
+      fetchTransactionDataByMonth={fetchTransactionDataByMonth}
+      updateTransactions={updateTransactions}
+    />
+  )}
+</Tab.Screen>
+
         <Tab.Screen
           name="Add"
           options={{
@@ -122,15 +143,17 @@ const AppNavigation = () => {
             },
           }}
         />
-        <Tab.Screen
-          name="Stats"
-          options={{
-            headerShown: false,
-            tabBarLabel: '',
-            tabBarIcon: ({ color, size }) => <ChartPieIcon color={'white'} size={25} />,
-          }}
-          component={StatsScreen}
-        />
+<Tab.Screen
+  name="Stats"
+  options={{
+    headerShown: false,
+    tabBarLabel: '',
+    tabBarIcon: ({ color, size }) => <ChartPieIcon color={'white'} size={25} />,
+  }}>
+  {() => 
+    <StatsScreen transactions={transactions} fetchTransactionDataByMonth={fetchTransactionData} /> }
+</Tab.Screen>
+
         <Tab.Screen
           name="Bills"
           options={{
@@ -138,7 +161,7 @@ const AppNavigation = () => {
             tabBarLabel: '',
             tabBarIcon: ({ color, size }) => <QueueListIcon color={'white'} size={25} />,
           }}>
-          {() => <BillsScreen transactions={transactions} />}
+          {() => <BillsScreen transactions={transactions} updateTransactions={updateTransactions} />}
         </Tab.Screen>
         <Tab.Screen
           name="Welcome"
@@ -154,6 +177,7 @@ const AppNavigation = () => {
         isVisible={isModalVisible}
         onClose={closeModal}
         onSaveTransaction={handleSaveTransaction}
+        updateTransactions ={updateTransactions}
       />
     </NavigationContainer>
   );

@@ -1,12 +1,57 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { BarChart, LineChart } from 'react-native-chart-kit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function StatsScreen() {
+export default function StatsScreen({ transactions, fetchTransactionDataByMonth }) {
   const [week, setWeek] = useState(true);
   const [month, setMonth] = useState(false);
   const [year, setYear] = useState(false);
+
+  const [monthData, setMonthData] = useState([]);
+
+  useEffect(() => {
+    fetchTransactionData();
+  }, []);
+
+  const fetchTransactionData = async () => {
+    try {
+      const transactionsData = await AsyncStorage.getItem('transactions');
+      if (transactionsData) {
+        const transactions = JSON.parse(transactionsData);
+        console.log('Transactions:', transactions);
+
+        const dataByMonth = new Array(12).fill(0);
+
+        transactions.forEach((transaction) => {
+          const [day, month, year] = transaction.date.split('.');
+          console.log('Transaction Date:', day, month, year);
+
+          const transactionMonth = parseInt(month) - 1;
+          console.log('Transaction Month:', transactionMonth);
+
+          const amountToAdd = transaction.isIncome ? transaction.amount : 0;
+          console.log('Is Income:', transaction.isIncome);
+          console.log('Amount to Add:', amountToAdd);
+
+          dataByMonth[transactionMonth] += amountToAdd;
+          console.log('Month Data:', dataByMonth);
+        });
+
+        setMonthData(dataByMonth);
+      }
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchTransactionData(); // Вызываем функцию для обновления данных графика
+  }, [transactions]);
+  
+  
   return (
     <View>
       <ImageBackground
@@ -36,20 +81,7 @@ export default function StatsScreen() {
                   ],
                   datasets: [
                     {
-                      data: [
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                        Math.random() * 100,
-                      ],
+                      data: monthData,
                     },
                   ],
                 }}

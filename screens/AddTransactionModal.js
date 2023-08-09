@@ -7,26 +7,38 @@ import { Checkbox } from 'expo-checkbox';
 import { KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function AddTransactionModal({ isVisible, onClose, onSaveTransaction }) {
+export default function AddTransactionModal({ isVisible, onClose, onSaveTransaction, updateTransactions }) {
   const [transactionName, setTransactionName] = useState('');
   const [amount, setAmount] = useState('');
-  const [isIncome, setIsIncome] = useState(false);
+  const [isIncome, setIsIncome] = useState(true);
 
   const handleSaveTransaction = async () => {
     try {
-      const transactionData = {
+      const newTransaction = {
         name: transactionName,
-        amount: amount,
+        amount: parseFloat(amount),
+        isIncome,
         date: new Date().toLocaleDateString('ru-RU'),
-        isIncome: isIncome,
       };
-      if (amount && transactionName) {
-        await onSaveTransaction(transactionData);
+
+      const existingTransactions = await AsyncStorage.getItem('transactions');
+      let transactions = [];
+
+      if (existingTransactions) {
+        transactions = JSON.parse(existingTransactions);
       }
+
+      transactions.push(newTransaction);
+
+      await AsyncStorage.setItem('transactions', JSON.stringify(transactions));
+
+      // После успешного сохранения вызываем функцию для обновления данных
+      updateTransactions(transactions);
 
       setTransactionName('');
       setAmount('');
-      setIsIncome(false);
+      setIsIncome(true);
+      onClose();
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
