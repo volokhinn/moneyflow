@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getCategoryByTransactionName, categories } from '../helpers/TransactionHelpers';
 
 export default function StatsScreen({ transactions }) {
   const [monthData, setMonthData] = useState([]);

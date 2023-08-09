@@ -1,6 +1,7 @@
 import { View, Text, Image, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
+import keywordsToIcons from '../helpers/TransactionHelpers';
 
 export default function BillsScreen({ transactions }) {
   useEffect(() => {
@@ -18,8 +19,16 @@ export default function BillsScreen({ transactions }) {
           <ScrollView className="mx-4 mb-14">
             {transactions.map((transaction, index) => (
               <View key={index} className="flex-row justify-between items-center my-2">
-                {/* Use appropriate data from transaction object */}
-                <Image source={require('../assets/img/services/steam.png')} />
+                {transaction.name && transaction.name.toLowerCase() in keywordsToIcons ? (
+                  <Image
+                    source={keywordsToIcons[transaction.name.toLowerCase()]}
+                    className="h-10 w-10"
+                  />
+                ) : transaction.isIncome ? (
+                  <Image source={require('../assets/adaptive-icon.png')} className="h-10 w-10" />
+                ) : (
+                  <Image source={require('../assets/favicon.png')} className="h-10 w-10" />
+                )}
                 <View className="flex-column justify-between">
                   <Text className="text-white text-xl font-black">{transaction.name}</Text>
                   <Text className="text-white text-sm opacity-50">{transaction.date}</Text>
