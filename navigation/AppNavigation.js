@@ -56,6 +56,31 @@ const AppNavigation = () => {
     fetchTransactions();
   }, []);
 
+  const fetchTransactionDataByMonth = async () => {
+    try {
+      const transactionsData = await AsyncStorage.getItem('transactions');
+      if (transactionsData) {
+        const transactions = JSON.parse(transactionsData);
+
+        const dataByMonth = new Array(12).fill(0);
+
+        transactions.forEach((transaction) => {
+          const [day, month, year] = transaction.date.split('.');
+          const transactionMonth = parseInt(month) - 1;
+          const amountToAdd = transaction.isIncome ? transaction.amount : 0;
+          dataByMonth[transactionMonth] += amountToAdd;
+        });
+
+        return dataByMonth;
+      } else {
+        return new Array(12).fill(0);
+      }
+    } catch (error) {
+      console.error('Error fetching transaction data by month:', error);
+      return new Array(12).fill(0);
+    }
+  };
+
   // Функция для сохранения транзакции в хранилище
   const handleSaveTransaction = async (transactionData) => {
     try {
@@ -110,23 +135,23 @@ const AppNavigation = () => {
           {() => <HomeScreen transactions={transactions} />}
         </Tab.Screen>
         <Tab.Screen
-  name="Settings"
-  options={{
-    headerShown: false,
-    tabBarLabel: '',
-    tabBarIcon: ({ color, size }) => (
-      <AdjustmentsHorizontalIcon color={'white'} size={25} />
-    ),
-  }}>
-  {() => (
-    <SettingsScreen
-      onClearTransactions={handleClearTransactions}
-      fetchTransactionData={fetchTransactionData}
-      fetchTransactionDataByMonth={fetchTransactionDataByMonth}
-      updateTransactions={updateTransactions}
-    />
-  )}
-</Tab.Screen>
+          name="Settings"
+          options={{
+            headerShown: false,
+            tabBarLabel: '',
+            tabBarIcon: ({ color, size }) => (
+              <AdjustmentsHorizontalIcon color={'white'} size={25} />
+            ),
+          }}>
+          {() => (
+            <SettingsScreen
+              onClearTransactions={handleClearTransactions}
+              fetchTransactionData={fetchTransactionData}
+              fetchTransactionDataByMonth={fetchTransactionDataByMonth}
+              updateTransactions={updateTransactions}
+            />
+          )}
+        </Tab.Screen>
 
         <Tab.Screen
           name="Add"
@@ -143,16 +168,20 @@ const AppNavigation = () => {
             },
           }}
         />
-<Tab.Screen
-  name="Stats"
-  options={{
-    headerShown: false,
-    tabBarLabel: '',
-    tabBarIcon: ({ color, size }) => <ChartPieIcon color={'white'} size={25} />,
-  }}>
-  {() => 
-    <StatsScreen transactions={transactions} fetchTransactionDataByMonth={fetchTransactionData} /> }
-</Tab.Screen>
+        <Tab.Screen
+          name="Stats"
+          options={{
+            headerShown: false,
+            tabBarLabel: '',
+            tabBarIcon: ({ color, size }) => <ChartPieIcon color={'white'} size={25} />,
+          }}>
+          {() => (
+            <StatsScreen
+              transactions={transactions}
+              fetchTransactionDataByMonth={fetchTransactionData}
+            />
+          )}
+        </Tab.Screen>
 
         <Tab.Screen
           name="Bills"
@@ -161,7 +190,9 @@ const AppNavigation = () => {
             tabBarLabel: '',
             tabBarIcon: ({ color, size }) => <QueueListIcon color={'white'} size={25} />,
           }}>
-          {() => <BillsScreen transactions={transactions} updateTransactions={updateTransactions} />}
+          {() => (
+            <BillsScreen transactions={transactions} updateTransactions={updateTransactions} />
+          )}
         </Tab.Screen>
         <Tab.Screen
           name="Welcome"
@@ -177,7 +208,7 @@ const AppNavigation = () => {
         isVisible={isModalVisible}
         onClose={closeModal}
         onSaveTransaction={handleSaveTransaction}
-        updateTransactions ={updateTransactions}
+        updateTransactions={updateTransactions}
       />
     </NavigationContainer>
   );

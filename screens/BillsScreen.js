@@ -1,8 +1,12 @@
 import { View, Text, Image, ScrollView } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 
 export default function BillsScreen({ transactions }) {
+  useEffect(() => {
+    console.log('BillsScreen - Component mounted'); // Добавляем этот console.log
+  }, []);
+
   return (
     <>
       <View>

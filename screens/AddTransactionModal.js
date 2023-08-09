@@ -7,7 +7,12 @@ import { Checkbox } from 'expo-checkbox';
 import { KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function AddTransactionModal({ isVisible, onClose, onSaveTransaction, updateTransactions }) {
+export default function AddTransactionModal({
+  isVisible,
+  onClose,
+  onSaveTransaction,
+  updateTransactions,
+}) {
   const [transactionName, setTransactionName] = useState('');
   const [amount, setAmount] = useState('');
   const [isIncome, setIsIncome] = useState(true);
