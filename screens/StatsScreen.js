@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { ImageBackground } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getCategoryByTransactionName, categories } from '../helpers/TransactionHelpers';
+import { keywordsToIcons, getCategoryExpenses } from '../helpers/TransactionHelpers';
 
 export default function StatsScreen({ transactions }) {
   const [monthData, setMonthData] = useState([]);
 
   useEffect(() => {
-    fetchTransactionDataByMonth(transactions); // Вызываем функцию для обновления данных графика
+    fetchTransactionDataByMonth(transactions);
   }, [transactions]);
 
   const fetchTransactionDataByMonth = (transactions) => {
@@ -18,12 +18,19 @@ export default function StatsScreen({ transactions }) {
     transactions.forEach((transaction) => {
       const [day, month, year] = transaction.date.split('.');
       const transactionMonth = parseInt(month) - 1;
-      const amountToAdd = transaction.isIncome ? transaction.amount : 0;
+      const amountToAdd = transaction.isIncome ? transaction.amount : -transaction.amount;
       dataByMonth[transactionMonth] += amountToAdd;
     });
 
     setMonthData(dataByMonth);
   };
+
+  const totalExpenses = transactions.reduce((total, transaction) => {
+    if (transaction.isIncome === false) {
+      return total + transaction.amount;
+    }
+    return +total;
+  }, 0);
 
   return (
     <View>
@@ -57,7 +64,7 @@ export default function StatsScreen({ transactions }) {
                 width={800}
                 height={200}
                 yAxisLabel="$"
-                yAxisSuffix="k"
+                yAxisSuffix=""
                 withInnerLines={false}
                 showBarTops={false}
                 yAxisInterval={1}
@@ -102,8 +109,8 @@ export default function StatsScreen({ transactions }) {
               <View className="flex-row items-center">
                 <Image source={require('../assets/img/services/entertaiments.png')} />
                 <View>
-                  <Text className="text-white font-black text-2xl ml-4">$ 106</Text>
-                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">50%</Text>
+                  <Text className="text-white font-black text-2xl ml-4">$ {getCategoryExpenses('Entertaiments', transactions)}</Text>
+                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">{totalExpenses === 0 ? "0%" : `${(getCategoryExpenses('Entertaiments', transactions) / totalExpenses * 100).toFixed(2)}%`}</Text>
                 </View>
               </View>
             </View>
@@ -114,8 +121,8 @@ export default function StatsScreen({ transactions }) {
               <View className="flex-row items-center">
                 <Image source={require('../assets/img/services/restaurants.png')} />
                 <View>
-                  <Text className="text-white font-black text-2xl ml-4">$ 106</Text>
-                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">50%</Text>
+                  <Text className="text-white font-black text-2xl ml-4">$ {getCategoryExpenses('Restaurants', transactions)}</Text>
+                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">{totalExpenses === 0 ? "0%" : `${(getCategoryExpenses('Restaurants', transactions) / totalExpenses * 100).toFixed(2)}%`}</Text>
                 </View>
               </View>
             </View>
@@ -128,8 +135,8 @@ export default function StatsScreen({ transactions }) {
               <View className="flex-row items-center">
                 <Image source={require('../assets/img/services/communal.png')} />
                 <View>
-                  <Text className="text-white font-black text-2xl ml-4">$ 106</Text>
-                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">50%</Text>
+                  <Text className="text-white font-black text-2xl ml-4">$ {getCategoryExpenses('Communal Services', transactions)}</Text>
+                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">{totalExpenses === 0 ? "0%" : `${(getCategoryExpenses('Communal Services', transactions) / totalExpenses * 100).toFixed(2)}%`}</Text>
                 </View>
               </View>
             </View>
@@ -140,8 +147,8 @@ export default function StatsScreen({ transactions }) {
               <View className="flex-row items-center">
                 <Image source={require('../assets/img/services/shopping.png')} />
                 <View>
-                  <Text className="text-white font-black text-2xl ml-4">$ 106</Text>
-                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">50%</Text>
+                  <Text className="text-white font-black text-2xl ml-4">$ {getCategoryExpenses('Shopping', transactions)}</Text>
+                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">{totalExpenses === 0 ? "0%" : `${(getCategoryExpenses('Shopping', transactions) / totalExpenses * 100).toFixed(2)}%`}</Text>
                 </View>
               </View>
             </View>
@@ -154,8 +161,8 @@ export default function StatsScreen({ transactions }) {
               <View className="flex-row items-center">
                 <Image source={require('../assets/img/services/transfer.png')} />
                 <View>
-                  <Text className="text-white font-black text-2xl ml-4">$ 106</Text>
-                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">50%</Text>
+                  <Text className="text-white font-black text-2xl ml-4">$ {getCategoryExpenses('Transfers', transactions)}</Text>
+                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">{totalExpenses === 0 ? "0%" : `${(getCategoryExpenses('Transfers', transactions) / totalExpenses * 100).toFixed(2)}%`}</Text>
                 </View>
               </View>
             </View>
@@ -166,8 +173,8 @@ export default function StatsScreen({ transactions }) {
               <View className="flex-row items-center">
                 <Image source={require('../assets/img/services/other.png')} />
                 <View>
-                  <Text className="text-white font-black text-2xl ml-4">$ 106</Text>
-                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">50%</Text>
+                  <Text className="text-white font-black text-2xl ml-4">$ {getCategoryExpenses('Other', transactions)}</Text>
+                  <Text className="text-gray-300 opacity-50 font-black text-xl ml-4 mt-2">{totalExpenses === 0 ? "0%" : `${(getCategoryExpenses('Other', transactions) / totalExpenses * 100).toFixed(2)}%`}</Text>
                 </View>
               </View>
             </View>

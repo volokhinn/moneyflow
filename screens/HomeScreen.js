@@ -1,6 +1,7 @@
 import { View, Text, ImageBackground, Image } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import Swiper from 'react-native-swiper';
 
 export default function HomeScreen({ transactions }) {
   const calculateIncome = () => {
@@ -53,11 +54,22 @@ export default function HomeScreen({ transactions }) {
               style={{ padding: 1 }}
               className="p-3 rounded-xl">
               <Image source={require('../assets/img/lamp.png')} />
-              <Text className="text-white text-[14px] mt-4">
-                {' '}
-                Things may come {'\n'} and go, but our {'\n'} bills are a constant. {'\n'} Keep them
-                on track {'\n'} with ease
-              </Text>
+              <Swiper horizontal={false}>
+                <View>
+                  <Text className="text-white text-[14px] mt-4">
+                    {' '}
+                    Things may come {'\n'} and go, but our {'\n'} bills are a constant. {'\n'} Keep them
+                    on track {'\n'} with ease
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px] mt-4">
+                    {' '}
+                    Things may come {'\n'} and go, but our {'\n'} bills are a constant. {'\n'} Keep them
+                    on track {'\n'} with ease
+                  </Text>
+                </View>
+              </Swiper>
             </LinearGradient>
           </View>
         </View>

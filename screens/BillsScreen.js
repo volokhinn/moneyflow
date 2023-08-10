@@ -1,7 +1,7 @@
 import { View, Text, Image, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
-import keywordsToIcons from '../helpers/TransactionHelpers';
+import {keywordsToIcons} from '../helpers/TransactionHelpers';
 
 export default function BillsScreen({ transactions }) {
   useEffect(() => {
