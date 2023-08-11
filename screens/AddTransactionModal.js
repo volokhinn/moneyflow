@@ -67,7 +67,12 @@ export default function AddTransactionModal({
           </TouchableOpacity> */}
           <View className="w-28 h-1 rounded-full bg-white self-center mt-2"></View>
           <View className="flex-row items-center mt-10">
-            <Checkbox value={isIncome} onValueChange={setIsIncome} className="mr-4 rounded-full" color="#fff" />
+            <Checkbox
+              value={isIncome}
+              onValueChange={setIsIncome}
+              className="mr-4 rounded-full"
+              color="#fff"
+            />
             <Text className="text-white text-xl">Income</Text>
           </View>
           <View className="flex-row items-center mt-6">

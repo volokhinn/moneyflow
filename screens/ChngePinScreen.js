@@ -29,7 +29,6 @@ const ChangePinScreen = ({ navigation }) => {
         onChangeText={setCurrentPin}
         keyboardType="numeric"
         secureTextEntry={true}
-        textContentType="telephoneNumber"
         maxLength={4}
       />
       <Text>Enter new pin:</Text>

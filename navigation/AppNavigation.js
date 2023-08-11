@@ -28,7 +28,7 @@ const Tab = createBottomTabNavigator();
 const AppNavigation = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  const [isNewUser, setIsNewUser] = useState(true)
+  const [isNewUser, setIsNewUser] = useState(true);
   const [isPinEntered, setIsPinEntered] = useState(false);
 
   useEffect(() => {
@@ -149,6 +149,7 @@ const AppNavigation = () => {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName={isNewUser ? 'Welcome' : 'EnterPin'}
+        // initialRouteName={isNewUser ? 'CreatePin' : 'CreatePin'}
         screenOptions={{
           tabBarStyle: {
             backgroundColor: 'transparent',
@@ -157,24 +158,29 @@ const AppNavigation = () => {
             elevation: 0,
           },
         }}>
-          <Tab.Screen
-            name="CreatePin"
-            options={{
-              headerShown: false,
-              tabBarStyle: { display: 'none' },
-              tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-            }}>
-            {({ navigation }) => <CreatePinScreen navigation={navigation} isNewUser={isNewUser} setIsNewUser={setIsNewUser} />}
-          </Tab.Screen>
-          <Tab.Screen
+        <Tab.Screen
+          name="CreatePin"
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
+          }}>
+          {({ navigation }) => (
+            <CreatePinScreen
+              navigation={navigation}
+              isNewUser={isNewUser}
+              setIsNewUser={setIsNewUser}
+            />
+          )}
+        </Tab.Screen>
+        <Tab.Screen
           name="EnterPin"
           options={{
             headerShown: false,
             tabBarStyle: { display: 'none' },
             tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-          }}
-          >
-          {({navigation}) => <EnterPinScreen navigation={navigation} />}
+          }}>
+          {({ navigation }) => <EnterPinScreen navigation={navigation} />}
         </Tab.Screen>
         <Tab.Screen
           name="ChangePin"
@@ -182,9 +188,8 @@ const AppNavigation = () => {
             headerShown: false,
             tabBarStyle: { display: 'none' },
             tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-          }}
-          >
-          {({navigation}) => <ChangePinScreen navigation={navigation} />}
+          }}>
+          {({ navigation }) => <ChangePinScreen navigation={navigation} />}
         </Tab.Screen>
         <Tab.Screen
           name="Home"
@@ -204,7 +209,7 @@ const AppNavigation = () => {
               <AdjustmentsHorizontalIcon color={'white'} size={25} />
             ),
           }}>
-          {({navigation}) => (
+          {({ navigation }) => (
             <SettingsScreen
               onClearTransactions={handleClearTransactions}
               fetchTransactionData={fetchTransactionData}
@@ -265,13 +270,13 @@ const AppNavigation = () => {
             tabBarStyle: { display: 'none' },
             tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
           }}>
-          {({ navigation }) => (
+          {({ navigation }) =>
             isNewUser ? (
               <WelcomeScreen navigation={navigation} isNewUser={isNewUser} />
             ) : (
               <EnterPinScreen navigation={navigation} />
             )
-          )}
+          }
         </Tab.Screen>
       </Tab.Navigator>
       <AddTransactionModal
