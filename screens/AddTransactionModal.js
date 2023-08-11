@@ -53,13 +53,15 @@ export default function AddTransactionModal({
     <Modal
       isVisible={isVisible}
       onBackdropPress={onClose}
+      backdropColor="black"
+      backdropOpacity={0.8}
       swipeDirection={['down']}
       onSwipeComplete={onClose}
       className="rounded-full">
       <KeyboardAvoidingView>
         <View
           className="bg-opacity-50 h-fit w-full p-4 rounded-2xl"
-          style={{ backgroundColor: 'rgba(255,255,255,0.3)', blur: 30 }}>
+          style={{ backgroundColor: 'rgba(255,255,255,0.3)', blur: 60 }}>
           {/* <TouchableOpacity onPress={onClose} className="self-end">
             <XMarkIcon size={25} color={'black'} />
           </TouchableOpacity> */}

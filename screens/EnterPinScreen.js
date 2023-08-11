@@ -26,9 +26,11 @@ const EnterPinScreen = ({ navigation }) => {
       <Text>Enter your pin:</Text>
       <TextInput
         value={enteredPin}
+        maxLength={4}
+        textContentType="password"
         onChangeText={setEnteredPin}
         keyboardType="numeric"
-        secureTextEntry
+        secureTextEntry={true}
       />
       <TouchableOpacity onPress={handlePinSubmit}>
         <Text>Submit</Text>

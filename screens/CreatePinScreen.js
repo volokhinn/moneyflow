@@ -24,6 +24,8 @@ const CreatePinScreen = ({ navigation, setIsNewUser }) => {
       <Text>Create your pin:</Text>
       <TextInput
         value={pin}
+        maxLength={4}
+        textContentType="password"
         onChangeText={setPin}
         keyboardType="numeric"
         secureTextEntry

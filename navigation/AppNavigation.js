@@ -9,6 +9,7 @@ import AddTransactionModal from '../screens/AddTransactionModal';
 import SettingsScreen from '../screens/SettingsScreen';
 import CreatePinScreen from '../screens/CreatePinScreen';
 import EnterPinScreen from '../screens/EnterPinScreen';
+import ChangePinScreen from '../screens/ChngePinScreen';
 import { LogBox, View, Text } from 'react-native';
 import {
   HomeIcon,
@@ -176,6 +177,16 @@ const AppNavigation = () => {
           {({navigation}) => <EnterPinScreen navigation={navigation} />}
         </Tab.Screen>
         <Tab.Screen
+          name="ChangePin"
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
+          }}
+          >
+          {({navigation}) => <ChangePinScreen navigation={navigation} />}
+        </Tab.Screen>
+        <Tab.Screen
           name="Home"
           options={{
             headerShown: false,
@@ -193,7 +204,7 @@ const AppNavigation = () => {
               <AdjustmentsHorizontalIcon color={'white'} size={25} />
             ),
           }}>
-          {() => (
+          {({navigation}) => (
             <SettingsScreen
               onClearTransactions={handleClearTransactions}
               fetchTransactionData={fetchTransactionData}
@@ -201,6 +212,7 @@ const AppNavigation = () => {
               updateTransactions={updateTransactions}
               isNewUser={isNewUser}
               setIsNewUser={setIsNewUser}
+              navigation={navigation}
             />
           )}
         </Tab.Screen>

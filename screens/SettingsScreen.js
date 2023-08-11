@@ -7,7 +7,8 @@ export default function SettingsScreen({
   onClearTransactions,
   fetchTransactionDataByMonth,
   isNewUser,
-  setIsNewUser
+  setIsNewUser,
+  navigation
 }) {
   const handleClearTransactions = async () => {
     try {
@@ -44,8 +45,11 @@ export default function SettingsScreen({
             className="px-4 py-2 m-4 rounded-md bg-white">
             <Text className="text-black text-xl font-bold">Clear All Transactions</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleResetNewUser}>
-            <Text>Reset isNewUser</Text>
+          <TouchableOpacity className="px-4 py-2 m-4 rounded-md bg-white" onPress={() => navigation.navigate('ChangePin')}>
+          <Text className="text-black text-xl font-bold">Change pin code</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleResetNewUser}>
+            <Text className="text-white text-center">Reset isNewUser</Text>
           </TouchableOpacity>
         </ImageBackground>
       </View>
