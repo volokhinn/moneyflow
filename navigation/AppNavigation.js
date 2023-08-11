@@ -7,6 +7,8 @@ import BillsScreen from '../screens/BillsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import AddTransactionModal from '../screens/AddTransactionModal';
 import SettingsScreen from '../screens/SettingsScreen';
+import CreatePinScreen from '../screens/CreatePinScreen';
+import EnterPinScreen from '../screens/EnterPinScreen';
 import { LogBox, View, Text } from 'react-native';
 import {
   HomeIcon,
@@ -25,7 +27,36 @@ const Tab = createBottomTabNavigator();
 const AppNavigation = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [isNewUser, setIsNewUser] = useState(true)
+  const [isPinEntered, setIsPinEntered] = useState(false);
 
+  useEffect(() => {
+    // Проверяем, новый ли пользователь (по наличию пин-кода)
+    const checkNewUser = async () => {
+      try {
+        const savedIsNewUser = await AsyncStorage.getItem('isNewUser');
+        setIsNewUser(savedIsNewUser === 'true');
+      } catch (error) {
+        console.error('Error checking new user:', error);
+      }
+    };
+
+    checkNewUser();
+  }, []);
+
+  useEffect(() => {
+    // Проверяем, был ли введен пин-код
+    const checkPinEntered = async () => {
+      try {
+        const enteredPin = await AsyncStorage.getItem('enteredPin');
+        setIsPinEntered(enteredPin === 'true');
+      } catch (error) {
+        console.error('Error checking pin entered:', error);
+      }
+    };
+
+    checkPinEntered();
+  }, []);
   const openModal = () => {
     setModalVisible(true);
   };
@@ -116,7 +147,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Welcome"
+        initialRouteName={isNewUser ? 'Welcome' : 'EnterPin'}
         screenOptions={{
           tabBarStyle: {
             backgroundColor: 'transparent',
@@ -125,6 +156,25 @@ const AppNavigation = () => {
             elevation: 0,
           },
         }}>
+          <Tab.Screen
+            name="CreatePin"
+            options={{
+              headerShown: false,
+              tabBarStyle: { display: 'none' },
+              tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
+            }}>
+            {({ navigation }) => <CreatePinScreen navigation={navigation} isNewUser={isNewUser} setIsNewUser={setIsNewUser} />}
+          </Tab.Screen>
+          <Tab.Screen
+          name="EnterPin"
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
+          }}
+          >
+          {({navigation}) => <EnterPinScreen navigation={navigation} />}
+        </Tab.Screen>
         <Tab.Screen
           name="Home"
           options={{
@@ -149,6 +199,8 @@ const AppNavigation = () => {
               fetchTransactionData={fetchTransactionData}
               fetchTransactionDataByMonth={fetchTransactionDataByMonth}
               updateTransactions={updateTransactions}
+              isNewUser={isNewUser}
+              setIsNewUser={setIsNewUser}
             />
           )}
         </Tab.Screen>
@@ -200,9 +252,15 @@ const AppNavigation = () => {
             headerShown: false,
             tabBarStyle: { display: 'none' },
             tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
-          }}
-          component={WelcomeScreen}
-        />
+          }}>
+          {({ navigation }) => (
+            isNewUser ? (
+              <WelcomeScreen navigation={navigation} isNewUser={isNewUser} />
+            ) : (
+              <EnterPinScreen navigation={navigation} />
+            )
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
       <AddTransactionModal
         isVisible={isModalVisible}

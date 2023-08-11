@@ -6,6 +6,8 @@ export default function SettingsScreen({
   transactions,
   onClearTransactions,
   fetchTransactionDataByMonth,
+  isNewUser,
+  setIsNewUser
 }) {
   const handleClearTransactions = async () => {
     try {
@@ -18,6 +20,16 @@ export default function SettingsScreen({
       Alert.alert('Error', 'Failed to clear transactions.');
     }
   };
+  
+  const handleResetNewUser = async () => {
+    try {
+      await AsyncStorage.setItem('isNewUser', 'true'); // Устанавливаем флаг нового пользователя в true
+      console.log('isNewUser set to true');
+    } catch (error) {
+      console.error('Error resetting isNewUser:', error);
+    }
+  };
+  
 
   return (
     <>
@@ -31,6 +43,9 @@ export default function SettingsScreen({
             onPress={handleClearTransactions}
             className="px-4 py-2 m-4 rounded-md bg-white">
             <Text className="text-black text-xl font-bold">Clear All Transactions</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleResetNewUser}>
+            <Text>Reset isNewUser</Text>
           </TouchableOpacity>
         </ImageBackground>
       </View>

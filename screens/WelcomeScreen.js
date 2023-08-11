@@ -9,7 +9,15 @@ import React from 'react';
 import { ArrowRightIcon } from 'react-native-heroicons/outline';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function WelcomeScreen({ navigation }) {
+export default function WelcomeScreen({ navigation, isNewUser }) {
+  const handleStartTrial = () => {
+    if (isNewUser) {
+      navigation.navigate('CreatePin');
+    } else {
+      navigation.navigate('Home'); // Перенаправляем на главный экран, если пользователь не новый
+    }
+  };
+
   return (
     <View>
       <ImageBackground
@@ -34,7 +42,7 @@ export default function WelcomeScreen({ navigation }) {
               style={{ padding: 1 }}
               className="rounded-full mt-10">
               <TouchableOpacity
-                onPress={() => navigation.navigate('Home')}
+                onPress={handleStartTrial}
                 className="flex-row justify-between items-center rounded-full p-4"
                 style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}>
                 <Text className="text-white text-2xl uppercase font-semibold tracking-[2px]">
