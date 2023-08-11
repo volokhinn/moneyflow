@@ -44,7 +44,7 @@ export default function HomeScreen({ transactions }) {
               <Text className="text-white text-[24px] font-black">$ {calculateIncome()}</Text>
               <Text className="text-white text-[18px] opacity-40 font-black">Total earning</Text>
             </View>
-            <View className="mt-6">
+            <View className="mt-3">
               <Text className="text-white text-[24px] font-black">$ {calculateExpense()}</Text>
               <Text className="text-white text-[18px] opacity-40 font-black">Total expense</Text>
             </View>
@@ -58,16 +58,50 @@ export default function HomeScreen({ transactions }) {
               className="p-3 rounded-xl">
               <Image source={require('../assets/img/lamp.png')} />
               <View className="h-40 mt-4">
-              <Swiper horizontal={false} width={100} loop autoplay autoplayTimeout={10} height={0} showsPagination={false}>
+              <Swiper horizontal={false} width={100} loop autoplay autoplayTimeout={15} height={0} showsPagination={false}>
                 <View>
                   <Text className="text-white text-[14px]">
-                    Things may come and go, but our bills are a constant. Keep them
-                    on track with ease
+                    Things may come and go, but our bills are a constant. Keep them on track with ease
                   </Text>
                 </View>
                 <View>
                   <Text className="text-white text-[14px]">
-                  In order to understand that happiness is not in money, you first need to know both – happiness and money.
+                  In order to understand that happiness is not in money, you first need to know both – happiness and money
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px]">
+                  Money won't buy you happiness, but it will buy you a yacht on which you will go in search of it
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px]">
+                  The whole advantage of having money is the ability to use it
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px]">
+                  Remember that money has the ability to multiply
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px]">
+                  Rich is the one who receives more than he spends; poor is the one whose spending exceeds income
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px]">
+                  Spending money on unnecessary things, you will have little money for what is necessary
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px]">
+                  Money is just a means. They will lead you to any goal, but they will not replace you at the helm
+                  </Text>
+                </View>
+                <View>
+                  <Text className="text-white text-[14px]">
+                  Learn to save while you earn a little. You will be able to do this when you start earning more
                   </Text>
                 </View>
               </Swiper>
