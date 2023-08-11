@@ -1,16 +1,18 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { keywordsToIcons, getCategoryExpenses } from '../helpers/TransactionHelpers';
 
 export default function StatsScreen({ transactions }) {
   const [monthData, setMonthData] = useState([]);
+  const [selectedPeriod, setSelectedPeriod] = useState('Last week'); // Изначально выбран "Last week"
+  const [periodExpenses, setPeriodExpenses] = useState(0);
 
   useEffect(() => {
     fetchTransactionDataByMonth(transactions);
-  }, [transactions]);
+    updatePeriodExpenses(selectedPeriod);
+  }, [transactions, selectedPeriod]);
 
   const fetchTransactionDataByMonth = (transactions) => {
     const dataByMonth = new Array(12).fill(0);
@@ -25,12 +27,59 @@ export default function StatsScreen({ transactions }) {
     setMonthData(dataByMonth);
   };
 
-  const totalExpenses = transactions.reduce((total, transaction) => {
-    if (transaction.isIncome === false) {
-      return total + transaction.amount;
+  const updatePeriodExpenses = (period) => {
+    const periodTotalExpenses = getPeriodExpenses(period, transactions);
+    setPeriodExpenses(periodTotalExpenses);
+  };
+  
+  const getPeriodExpenses = (period) => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const currentWeek = getWeekNumber(currentDate)[1];
+  
+    const isSameYear = (transactionDate) => transactionDate && transactionDate.getFullYear() === currentYear;
+    const isSameMonth = (transactionDate) => transactionDate && transactionDate.getMonth() === currentMonth;
+    const isSameWeek = (transactionDate) => transactionDate && getWeekNumber(transactionDate)[1] === currentWeek;
+  
+    let filteredTransactions = [];
+  
+    switch (period) {
+      case 'Last week':
+        filteredTransactions = transactions.filter(transaction => isSameYear(new Date(transaction.date)) && isSameWeek(new Date(transaction.date)));
+        break;
+      case 'Last month':
+        filteredTransactions = transactions.filter(transaction => isSameYear(new Date(transaction.date)) && isSameMonth(new Date(transaction.date)));
+        break;
+      case 'Last year':
+        filteredTransactions = transactions.filter(transaction => isSameYear(new Date(transaction.date)));
+        break;
+      default:
+        break;
     }
-    return +total;
-  }, 0);
+  
+    return filteredTransactions.reduce((total, transaction) => {
+      if (!transaction.isIncome) {
+        return total + transaction.amount;
+      }
+      return total;
+    }, 0);
+  };
+  
+  const getWeekNumber = (date) => {
+    const currentDate = date;
+    const startDate = new Date(currentDate.getFullYear(), 0, 1);
+    const days = Math.floor((currentDate - startDate) / (24 * 60 * 60 * 1000));
+    const weekNumber = Math.ceil((days + 1) / 7);
+    return [currentDate.getFullYear(), weekNumber];
+  };
+  
+    const totalExpenses = transactions.reduce((total, transaction) => {
+      if (!transaction.isIncome) {
+        return total + transaction.amount;
+      }
+      return total;
+    }, 0);
 
   return (
     <View>
@@ -39,9 +88,10 @@ export default function StatsScreen({ transactions }) {
         resizeMode="cover"
         source={require('../assets/img/welcomebg.png')}>
         <ScrollView className="mt-8 mb-14">
-          <Text className="text-white text-2xl font-black mt-20 mx-4">Spend stats by month</Text>
+        <Text className="text-white text-4xl font-black mt-4 mx-4 mb-2">Statistics</Text>
+          <Text className="text-white text-2xl font-black mt-4 mx-4">Balance stats by month</Text>
           <View>
-            <ScrollView horizontal={true} s className="my-6 rounded-full">
+            <ScrollView horizontal={true} s className="mt-6 mb-4 rounded-full">
               <BarChart
                 backgroundColor="black"
                 data={{
@@ -87,17 +137,27 @@ export default function StatsScreen({ transactions }) {
               />
             </ScrollView>
           </View>
+          <Text className="text-white text-2xl font-black mb-4 mx-4">Spend stats by periods</Text>
           <View className="mx-1 flex-row justify-between">
-            <TouchableOpacity
-              className="py-2 px-4 rounded-full border-white border-[1px]"
-              style={{ backgroundColor: 'black' }}
-              onPress={() => setWeek(true)}>
+          <TouchableOpacity
+              className={`py-2 px-4 rounded-full border-white border-[1px] ${
+                selectedPeriod === 'Last week' ? 'bg-black' : ''
+              }`}
+              onPress={() => setSelectedPeriod('Last week')}>
               <Text className="text-white text-sm">Last week</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="py-2 px-4 rounded-full border-white border-[1px]">
+            <TouchableOpacity
+              className={`py-2 px-4 rounded-full border-white border-[1px] ${
+                selectedPeriod === 'Last month' ? 'bg-black' : ''
+              }`}
+              onPress={() => setSelectedPeriod('Last month')}>
               <Text className="text-white text-sm">Last month</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="py-2 px-4 rounded-full border-white border-[1px]">
+            <TouchableOpacity
+              className={`py-2 px-4 rounded-full border-white border-[1px] ${
+                selectedPeriod === 'Last year' ? 'bg-black' : ''
+              }`}
+              onPress={() => setSelectedPeriod('Last year')}>
               <Text className="text-white text-sm">Last year</Text>
             </TouchableOpacity>
           </View>
