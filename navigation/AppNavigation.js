@@ -9,7 +9,8 @@ import AddTransactionModal from '../screens/AddTransactionModal';
 import SettingsScreen from '../screens/SettingsScreen';
 import CreatePinScreen from '../screens/CreatePinScreen';
 import EnterPinScreen from '../screens/EnterPinScreen';
-import ChangePinScreen from '../screens/ChngePinScreen';
+import EnterExistingPinScreen from '../screens/EnterExistingPinScreen';
+import CreateNewPinScreen from '../screens/CreateNewPinScreen';
 import { LogBox, View, Text } from 'react-native';
 import {
   HomeIcon,
@@ -183,13 +184,22 @@ const AppNavigation = () => {
           {({ navigation }) => <EnterPinScreen navigation={navigation} />}
         </Tab.Screen>
         <Tab.Screen
-          name="ChangePin"
+          name="EnterExistingPin"
           options={{
             headerShown: false,
             tabBarStyle: { display: 'none' },
             tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
           }}>
-          {({ navigation }) => <ChangePinScreen navigation={navigation} />}
+          {({ navigation }) => <EnterExistingPinScreen navigation={navigation} />}
+        </Tab.Screen>
+        <Tab.Screen
+          name="CreateNewPin"
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
+          }}>
+          {({ navigation }) => <CreateNewPinScreen navigation={navigation} />}
         </Tab.Screen>
         <Tab.Screen
           name="Home"

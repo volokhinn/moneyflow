@@ -8,7 +8,7 @@ export default function SettingsScreen({
   fetchTransactionDataByMonth,
   isNewUser,
   setIsNewUser,
-  navigation
+  navigation,
 }) {
   const handleClearTransactions = async () => {
     try {
@@ -21,16 +21,17 @@ export default function SettingsScreen({
       Alert.alert('Error', 'Failed to clear transactions.');
     }
   };
-  
+
   const handleResetNewUser = async () => {
     try {
       await AsyncStorage.setItem('isNewUser', 'true'); // Устанавливаем флаг нового пользователя в true
       console.log('isNewUser set to true');
+      setIsCheckAttempted(false); // Сброс флага попытки проверки на экране EnterExistingPinScreen
+      setEnteredExistingPin(''); // Сброс введенного пароля на экране EnterExistingPinScreen
     } catch (error) {
       console.error('Error resetting isNewUser:', error);
     }
   };
-  
 
   return (
     <>
@@ -45,10 +46,12 @@ export default function SettingsScreen({
             className="px-4 py-2 m-4 rounded-md bg-white">
             <Text className="text-black text-xl font-bold">Clear All Transactions</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="px-4 py-2 m-4 rounded-md bg-white" onPress={() => navigation.navigate('ChangePin')}>
-          <Text className="text-black text-xl font-bold">Change pin code</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleResetNewUser}>
+          <TouchableOpacity
+            className="px-4 py-2 m-4 rounded-md bg-white"
+            onPress={() => navigation.navigate('EnterExistingPin')}>
+            <Text className="text-black text-xl font-bold">Change pin code</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleResetNewUser}>
             <Text className="text-white text-center">Reset isNewUser</Text>
           </TouchableOpacity>
         </ImageBackground>
