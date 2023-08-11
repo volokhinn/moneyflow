@@ -19,9 +19,9 @@ export default function BillsScreen({ transactions }) {
           <ScrollView className="mx-4 mb-14">
             {transactions.map((transaction, index) => (
               <View key={index} className="flex-row justify-between items-center my-2">
-                {transaction.name && transaction.name.toLowerCase() in keywordsToIcons ? (
+                {transaction.name.toLowerCase().replace(/\s/g, '') in keywordsToIcons ? (
                   <Image
-                    source={keywordsToIcons[transaction.name.toLowerCase()]}
+                    source={keywordsToIcons[transaction.name.toLowerCase()]?.img}
                     className="h-10 w-10"
                   />
                 ) : transaction.isIncome ? (

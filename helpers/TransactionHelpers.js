@@ -7,20 +7,20 @@ export const keywordsToIcons = {
     img: require('../assets/favicon.png'),
     cat: 'Entertaiments',
   },
-  'Вилка-Ложка': {
+  'вилка-ложка': {
     img: require('../assets/favicon.png'),
     cat: 'Restaurants',
   },
-  'БК': {
+  'бк': {
     img: require('../assets/favicon.png'),
     cat: 'Restaurants',
   },
-  'Бургер-Кинг': {
+  'бургер-кинг': {
     img: require('../assets/favicon.png'),
     cat: 'Restaurants',
   },
-  // Добавьте другие ключевые слова и соответствующие иконки
 };
+
 
 export const getCategoryExpenses = (categoryName, transactions) => {
   const totalExpense = transactions.reduce((total, transaction) => {

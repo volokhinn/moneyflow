@@ -1,7 +1,8 @@
 import { View, Text, ImageBackground, Image } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Swiper from 'react-native-swiper';
+import {keywordsToIcons} from '../helpers/TransactionHelpers';
 
 export default function HomeScreen({ transactions }) {
   const calculateIncome = () => {
@@ -25,6 +26,8 @@ export default function HomeScreen({ transactions }) {
   };
 
   const lastThreeTransactions = transactions.slice(-3);
+
+  const status = ['Things may come', 'Things may come 111']
 
   return (
     <View className="flex-1 justify-center items-center">
@@ -54,22 +57,21 @@ export default function HomeScreen({ transactions }) {
               style={{ padding: 1 }}
               className="p-3 rounded-xl">
               <Image source={require('../assets/img/lamp.png')} />
-              <Swiper horizontal={false}>
+              <View className="h-40 mt-4">
+              <Swiper horizontal={false} width={100} loop autoplay autoplayTimeout={10} height={0} showsPagination={false}>
                 <View>
-                  <Text className="text-white text-[14px] mt-4">
-                    {' '}
-                    Things may come {'\n'} and go, but our {'\n'} bills are a constant. {'\n'} Keep them
-                    on track {'\n'} with ease
+                  <Text className="text-white text-[14px]">
+                    Things may come and go, but our bills are a constant. Keep them
+                    on track with ease
                   </Text>
                 </View>
                 <View>
-                  <Text className="text-white text-[14px] mt-4">
-                    {' '}
-                    Things may come {'\n'} and go, but our {'\n'} bills are a constant. {'\n'} Keep them
-                    on track {'\n'} with ease
+                  <Text className="text-white text-[14px]">
+                  In order to understand that happiness is not in money, you first need to know both – happiness and money.
                   </Text>
                 </View>
               </Swiper>
+              </View>
             </LinearGradient>
           </View>
         </View>
@@ -78,7 +80,16 @@ export default function HomeScreen({ transactions }) {
           {transactions.length ? (
             lastThreeTransactions.map((transaction, index) => (
               <View key={index} className="flex-row justify-between items-center my-2">
-                <Image source={require('../assets/img/services/steam.png')} />
+                {transaction.name.toLowerCase().replace(/\s/g, '') in keywordsToIcons ? (
+                  <Image
+                    source={keywordsToIcons[transaction.name.toLowerCase()]?.img}
+                    className="h-10 w-10"
+                  />
+                ) : transaction.isIncome ? (
+                  <Image source={require('../assets/adaptive-icon.png')} className="h-10 w-10" />
+                ) : (
+                  <Image source={require('../assets/favicon.png')} className="h-10 w-10" />
+                )}
                 <View className="flex-column justify-between">
                   <Text className="text-white text-xl font-black">{transaction.name}</Text>
                   <Text className="text-white text-sm opacity-50">{transaction.date}</Text>
