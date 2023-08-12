@@ -1,12 +1,25 @@
 import { View, Text, Image, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
-import {keywordsToIcons} from '../helpers/TransactionHelpers';
+import { keywordsToIcons } from '../helpers/TransactionHelpers';
 
 export default function BillsScreen({ transactions }) {
-  useEffect(() => {
-    console.log('BillsScreen - Component mounted'); // Добавляем этот console.log
-  }, []);
+  function getServiceIconFromText(text, isIncome) {
+    const lowercaseText = text.toLowerCase();
+  
+    for (const keyword in keywordsToIcons) {
+      const keywordMatches = lowercaseText.includes(keyword.toLowerCase());
+      if (keywordMatches) {
+        return keywordsToIcons[keyword].img;
+      }
+    }
+  
+    if (isIncome) {
+      return require('../assets/favicon.png');
+    } else {
+      return require('../assets/adaptive-icon.png');
+    }
+  }
 
   return (
     <>
@@ -19,16 +32,10 @@ export default function BillsScreen({ transactions }) {
           <ScrollView className="mx-4 mb-14">
             {transactions.map((transaction, index) => (
               <View key={index} className="flex-row justify-between items-center my-2">
-                {transaction.name.toLowerCase().replace(/\s/g, '') in keywordsToIcons ? (
-                  <Image
-                    source={keywordsToIcons[transaction.name.toLowerCase()]?.img}
-                    className="h-10 w-10"
-                  />
-                ) : transaction.isIncome ? (
-                  <Image source={require('../assets/adaptive-icon.png')} className="h-10 w-10" />
-                ) : (
-                  <Image source={require('../assets/favicon.png')} className="h-10 w-10" />
-                )}
+                <Image
+                  source={getServiceIconFromText(transaction.name, transaction.isIncome)}
+                  className="h-10 w-10"
+                />
                 <View className="flex-column justify-between">
                   <Text className="text-white text-xl font-black">{transaction.name}</Text>
                   <Text className="text-white text-sm opacity-50">{transaction.date}</Text>

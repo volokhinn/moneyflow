@@ -25,7 +25,6 @@ export default function SettingsScreen({
   const handleResetNewUser = async () => {
     try {
       await AsyncStorage.setItem('isNewUser', 'true'); // Устанавливаем флаг нового пользователя в true
-      console.log('isNewUser set to true');
     } catch (error) {
       console.error('Error resetting isNewUser:', error);
     }

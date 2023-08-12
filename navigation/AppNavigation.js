@@ -121,7 +121,6 @@ const AppNavigation = () => {
         const updatedTransactions = [...transactions, transactionData];
         setTransactions(updatedTransactions);
         await AsyncStorage.setItem('transactions', JSON.stringify(updatedTransactions));
-        console.log('Transaction Saved:', transactionData);
 
         fetchTransactionDataByMonth(); // Обновляем данные для графика
       }
@@ -134,7 +133,6 @@ const AppNavigation = () => {
     try {
       await AsyncStorage.removeItem('transactions');
       setTransactions([]);
-      console.log('Transactions Cleared');
 
       fetchTransactionDataByMonth(); // Обновляем данные для графика
     } catch (error) {
