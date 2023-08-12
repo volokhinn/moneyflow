@@ -35,7 +35,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-swipe-modal-up-down": "^1.1.0",
     "react-native-swiper": "^1.6.0",
-    "react-native-tab-view": "^2.16.0"
+    "react-native-tab-view": "^2.16.0",
+    "expo-sms": "~11.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  StyleSheet,
+  ImageBackground,
+  Image,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EnterPinScreen = ({ navigation }) => {
@@ -50,74 +58,54 @@ const EnterPinScreen = ({ navigation }) => {
 
   return (
     <View>
-      <Text>Enter your pin:</Text>
-      <View style={styles.pinContainer}>
-        {Array.from({ length: 4 }, (_, index) => (
-          <View
-            key={index}
-            style={[styles.pinDot, enteredPin.length > index && styles.pinDotFilled]}
-          />
-        ))}
-      </View>
-      <Animated.View style={[styles.keyboard, { transform: [{ translateX: shakeAnimation }] }]}>
-        {Array.from({ length: 9 }, (_, index) => (
+      <ImageBackground
+        className="h-full w-full"
+        resizeMode="cover"
+        source={require('../assets/img/welcomebg.png')}>
+        <Image className="mt-12 ml-[-150] absolute" source={require('../assets/img/coin.png')} />
+        <Text className="text-white text-2xl font-black my-20 text-center">Enter your pin</Text>
+        <View className="flex-row justify-center mt-4">
+          {Array.from({ length: 4 }, (_, index) => (
+            <View
+              key={index}
+              className="w-4 h-4 rounded-full bg-transparent border-[1px] border-white my-1 mb-20 mx-2"
+              style={[enteredPin.length > index && styles.pinDotFilled]}
+            />
+          ))}
+        </View>
+        <Animated.View
+          className="flex-row mx-10 flex-wrap justify-center mt-5"
+          style={[{ transform: [{ translateX: shakeAnimation }] }]}>
+          {Array.from({ length: 9 }, (_, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleKeyPress(index + 1)}
+              className="w-14 h-14 rounded-full bg-black justify-center items-center m-2">
+              <Text className="text-2xl text-white">{index + 1}</Text>
+            </TouchableOpacity>
+          ))}
           <TouchableOpacity
-            key={index}
-            onPress={() => handleKeyPress(index + 1)}
-            style={styles.key}>
-            <Text style={styles.keyText}>{index + 1}</Text>
+            onPress={() => handleKeyPress(0)}
+            className="w-14 h-14 rounded-full bg-black justify-center items-center m-2">
+            <Text className="text-2xl text-white">0</Text>
           </TouchableOpacity>
-        ))}
-        <TouchableOpacity onPress={() => handleKeyPress(0)} style={styles.key}>
-          <Text style={styles.keyText}>0</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleKeyPress('<')} style={styles.key}>
-          <Text style={styles.keyText}>←</Text>
-        </TouchableOpacity>
-      </Animated.View>
-      {!isPinCorrect && <Text style={styles.errorText}>Incorrect pin. Please try again.</Text>}
+          <TouchableOpacity
+            onPress={() => handleKeyPress('<')}
+            className="w-14 h-14 rounded-full bg-black justify-center items-center m-2">
+            <Text className="text-2xl text-white">←</Text>
+          </TouchableOpacity>
+        </Animated.View>
+        {!isPinCorrect && (
+          <Text className="text-red-600 mt-3 text-center">Incorrect pin. Please try again.</Text>
+        )}
+      </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  pinContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-  pinDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#E5E5E5',
-    marginHorizontal: 5,
-  },
   pinDotFilled: {
-    backgroundColor: 'black',
-  },
-  keyboard: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  key: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#E5E5E5',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 10,
-  },
-  keyText: {
-    fontSize: 24,
-  },
-  errorText: {
-    color: 'red',
-    marginTop: 10,
-    textAlign: 'center',
+    backgroundColor: 'white',
   },
 });
 

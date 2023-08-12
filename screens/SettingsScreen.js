@@ -26,8 +26,6 @@ export default function SettingsScreen({
     try {
       await AsyncStorage.setItem('isNewUser', 'true'); // Устанавливаем флаг нового пользователя в true
       console.log('isNewUser set to true');
-      setIsCheckAttempted(false); // Сброс флага попытки проверки на экране EnterExistingPinScreen
-      setEnteredExistingPin(''); // Сброс введенного пароля на экране EnterExistingPinScreen
     } catch (error) {
       console.error('Error resetting isNewUser:', error);
     }
