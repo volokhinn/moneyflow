@@ -26,25 +26,11 @@ LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']
 
 const Tab = createBottomTabNavigator();
 
-const AppNavigation = () => {
+const AppNavigation = ({ isNewNewUser }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [isNewUser, setIsNewUser] = useState(true);
   const [isPinEntered, setIsPinEntered] = useState(false);
-
-  useEffect(() => {
-    // Проверяем, новый ли пользователь (по наличию пин-кода)
-    const checkNewUser = async () => {
-      try {
-        const savedIsNewUser = await AsyncStorage.getItem('isNewUser');
-        setIsNewUser(savedIsNewUser === 'true');
-      } catch (error) {
-        console.error('Error checking new user:', error);
-      }
-    };
-
-    checkNewUser();
-  }, []);
 
   useEffect(() => {
     // Проверяем, был ли введен пин-код
@@ -147,7 +133,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={isNewUser ? 'Welcome' : 'EnterPin'}
+        initialRouteName={isNewNewUser ? 'Welcome' : 'EnterPin'}
         // initialRouteName={isNewUser ? 'CreatePin' : 'CreatePin'}
         screenOptions={{
           tabBarStyle: {

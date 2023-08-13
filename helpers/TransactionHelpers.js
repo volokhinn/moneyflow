@@ -567,50 +567,6 @@ export const keywordsToIcons = {
     img: require('../assets/services/arrow-left.png'),
     cat: 'Transfers',
   },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Shopping',
-  },
 };
 
 export const getCategoryExpenses = (categoryName, transactions) => {

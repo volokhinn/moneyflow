@@ -9,6 +9,8 @@ export default function SettingsScreen({
   isNewUser,
   setIsNewUser,
   navigation,
+  setIsPinEntered,
+  isPinEntered,
 }) {
   const handleClearTransactions = async () => {
     try {
@@ -24,7 +26,7 @@ export default function SettingsScreen({
 
   const handleResetNewUser = async () => {
     try {
-      await AsyncStorage.setItem('isNewUser', 'true'); // Устанавливаем флаг нового пользователя в true
+      await AsyncStorage.setItem('isNewUser', 'true');
     } catch (error) {
       console.error('Error resetting isNewUser:', error);
     }

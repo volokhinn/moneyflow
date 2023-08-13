@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Platform, SafeAreaView } from 'react-native';
 import AppNavigation from './navigation/AppNavigation';
 import { StatusBar } from 'expo-status-bar';
 import * as NavigationBar from 'expo-navigation-bar';
 import { useFonts } from 'expo-font';
-import { ActivityIndicator } from 'react-native';
-import { View } from 'react-native';
+import { ActivityIndicator, View, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 NavigationBar.setBackgroundColorAsync('#000');
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isNewNewUser, setIsNNewewUser] = useState(true); // Добавляем состояние для isNewUser
 
   useEffect(() => {
-    // Ваш код для загрузки данных или выполнения других инициализационных действий
+    // Загружаем isNewUser из AsyncStorage
+    const loadIsNewUser = async () => {
+      try {
+        const savedIsNewUser = await AsyncStorage.getItem('isNewUser');
+        setIsNNewewUser(savedIsNewUser === 'true');
+      } catch (error) {
+        console.error('Error loading isNewUser:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     setTimeout(() => {
-      setIsLoading(false); // Здесь выключаем прелоадер после завершения загрузки
-    }, 2000); // Пример: имитация задержки в 2 секунды
+      loadIsNewUser(); // Загружаем isNewUser после прелоадера
+    }, 3000);
   }, []);
 
   let [fontLoaded] = useFonts({
@@ -26,27 +38,26 @@ export default function App() {
   });
 
   if (!fontLoaded) {
-    <View className="flex-1 justify-center items-center">
-      <ActivityIndicator size="large" color="black" />
-    </View>;
+    // Верните компонент загрузки шрифтов
+    return (
+      <View className="flex-1 bg-black">
+        <Text className="text-white text-4xl font-black text-center mt-32">Moneyflow</Text>
+        <LottieView source={require('./assets/animation_ll920dee.json')} autoPlay loop />
+      </View>
+    );
   }
 
   return (
     <>
       <StatusBar translucent style="light" />
       {isLoading ? (
-        <View className="flex-1 justify-center items-center">
-          <ActivityIndicator size="large" color="black" />
+        <View className="flex-1 bg-black">
+          <Text className="text-white text-4xl font-black text-center mt-32">Moneyflow</Text>
+          <LottieView source={require('./assets/animation_ll920dee.json')} autoPlay loop />
         </View>
       ) : (
-        <AppNavigation />
+        <AppNavigation isNewNewUser={isNewNewUser} /> // Передаем isNewUser в AppNavigation
       )}
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  AndroidSafeArea: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-  },
-});
