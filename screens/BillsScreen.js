@@ -17,7 +17,11 @@ export default function BillsScreen({ transactions }) {
               <View key={index} className="flex-row justify-between items-center my-2">
                 <View className="h-10 w-10">
                   <Image
-                    source={getServiceIconFromText(transaction.name, transaction.isIncome)}
+                    source={
+                      transaction.iconPath
+                        ? transaction.iconPath
+                        : getServiceIconFromText(transaction.name, transaction.isIncome)
+                    }
                     className="h-full w-full"
                   />
                 </View>

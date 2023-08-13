@@ -128,10 +128,16 @@ export default function HomeScreen({ transactions }) {
           {transactions.length ? (
             lastThreeTransactions.map((transaction, index) => (
               <View key={index} className="flex-row justify-between items-center my-2">
-                <Image
-                  source={getServiceIconFromText(transaction.name, transaction.isIncome)}
-                  className="h-10 w-10"
-                />
+                <View className="h-10 w-10">
+                  <Image
+                    source={
+                      transaction.iconPath
+                        ? transaction.iconPath
+                        : getServiceIconFromText(transaction.name, transaction.isIncome)
+                    }
+                    className="h-full w-full"
+                  />
+                </View>
                 <View className="flex-column justify-between">
                   <Text className="text-white text-xl font-black">{transaction.name}</Text>
                   <Text className="text-white text-sm opacity-50">{transaction.date}</Text>

@@ -11,6 +11,7 @@ import CreatePinScreen from '../screens/CreatePinScreen';
 import EnterPinScreen from '../screens/EnterPinScreen';
 import EnterExistingPinScreen from '../screens/EnterExistingPinScreen';
 import CreateNewPinScreen from '../screens/CreateNewPinScreen';
+import FastTransactionScreen from '../screens/FastTransactionScreen';
 import { LogBox, View, Text } from 'react-native';
 import {
   HomeIcon,
@@ -166,6 +167,15 @@ const AppNavigation = ({ isNewNewUser }) => {
             tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
           }}>
           {({ navigation }) => <EnterPinScreen navigation={navigation} />}
+        </Tab.Screen>
+        <Tab.Screen
+          name="FastTransaction"
+          options={{
+            headerShown: false,
+            tabBarStyle: { display: 'none' },
+            tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
+          }}>
+          {({ navigation }) => <FastTransactionScreen navigation={navigation} />}
         </Tab.Screen>
         <Tab.Screen
           name="EnterExistingPin"

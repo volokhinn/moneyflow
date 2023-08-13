@@ -32,6 +32,14 @@ export default function SettingsScreen({
     }
   };
 
+  const handleClearQuickTransactions = async () => {
+    try {
+      await AsyncStorage.setItem('quickTransactions', '[]');
+    } catch (error) {
+      console.error('Error clearing quick transactions:', error);
+    }
+  };
+
   return (
     <>
       <View>
@@ -49,6 +57,14 @@ export default function SettingsScreen({
             className="px-4 py-2 m-4 rounded-md bg-white"
             onPress={() => navigation.navigate('EnterExistingPin')}>
             <Text className="text-black text-xl font-bold">Change pin code</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="px-4 py-2 m-4 rounded-md bg-white"
+            onPress={() => navigation.navigate('FastTransaction')}>
+            <Text className="text-black text-xl font-bold">Fast</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleClearQuickTransactions}>
+            <Text>Clear Quick Transactions</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleResetNewUser}>
             <Text className="text-white text-center">Reset isNewUser</Text>

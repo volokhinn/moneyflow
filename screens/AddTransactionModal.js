@@ -1,15 +1,51 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { Checkbox } from 'expo-checkbox';
 import { KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { keywordsToIcons } from '../helpers/TransactionHelpers';
 
 export default function AddTransactionModal({ isVisible, onClose, updateTransactions }) {
   const [transactionName, setTransactionName] = useState('');
   const [amount, setAmount] = useState('');
   const [isIncome, setIsIncome] = useState(true);
   const [error, setError] = useState(false);
+  const [quickTransactions, setQuickTransactions] = useState([]);
+  const [selectedQuickTransactionIcon, setSelectedQuickTransactionIcon] = useState(null);
+
+  useEffect(() => {
+    fetchQuickTransactions();
+  }, []);
+
+  const fetchQuickTransactions = async () => {
+    try {
+      const quickTransactionsData = await AsyncStorage.getItem('quickTransactions');
+      if (quickTransactionsData) {
+        const parsedQuickTransactions = JSON.parse(quickTransactionsData);
+        setQuickTransactions(parsedQuickTransactions);
+      }
+    } catch (error) {
+      console.error('Error fetching quick transactions:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      fetchQuickTransactions();
+    }
+  }, [isVisible]);
+
+  const quick = quickTransactions.map((quickTransaction, index) => (
+    <TouchableOpacity
+      key={index}
+      onPress={() => {
+        setTransactionName(quickTransaction.name);
+        setSelectedQuickTransactionIcon(quickTransaction.iconPath);
+      }}>
+      <Text>{quickTransaction.name}</Text>
+    </TouchableOpacity>
+  ));
 
   const handleSaveTransaction = async () => {
     try {
@@ -19,6 +55,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
         isIncome,
         date: new Date().toLocaleDateString('ru-RU'),
         cat: 'Other',
+        iconPath: selectedQuickTransactionIcon,
       };
 
       if (!newTransaction.name || isNaN(newTransaction.amount)) {
@@ -44,11 +81,11 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
       setIsIncome(true);
       onClose();
       setError(false);
+      setSelectedQuickTransactionIcon(null);
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
   };
-
   return (
     <Modal
       isVisible={isVisible}
@@ -108,6 +145,8 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
               borderColor: 'rgba(255,255,255,0.5)',
             }}
           />
+          <Text>Quick Transactions:</Text>
+          <ScrollView horizontal>{quick}</ScrollView>
           {error && (
             <Text className="text-md mt-5 text-red-500 font-bold">
               All fields of the form must be filled in
