@@ -6,18 +6,24 @@ import { keywordsToIcons } from '../helpers/TransactionHelpers';
 export default function BillsScreen({ transactions }) {
   function getServiceIconFromText(text, isIncome) {
     const lowercaseText = text.toLowerCase();
-  
+
+    if (isIncome && lowercaseText.includes('перевод от')) {
+      return keywordsToIcons['перевод от'].img;
+    }
+    if (!isIncome && lowercaseText.includes('перевод')) {
+      return keywordsToIcons['перевод'].img;
+    }
+
     for (const keyword in keywordsToIcons) {
-      const keywordMatches = lowercaseText.includes(keyword.toLowerCase());
-      if (keywordMatches) {
+      if (lowercaseText.includes(keyword)) {
         return keywordsToIcons[keyword].img;
       }
     }
-  
+
     if (isIncome) {
-      return require('../assets/favicon.png');
+      return require('../assets/services/arrow-left.png');
     } else {
-      return require('../assets/adaptive-icon.png');
+      return require('../assets/services/right-arrow.png');
     }
   }
 
@@ -32,10 +38,12 @@ export default function BillsScreen({ transactions }) {
           <ScrollView className="mx-4 mb-14">
             {transactions.map((transaction, index) => (
               <View key={index} className="flex-row justify-between items-center my-2">
-                <Image
-                  source={getServiceIconFromText(transaction.name, transaction.isIncome)}
-                  className="h-10 w-10"
-                />
+                <View className="h-10 w-10">
+                  <Image
+                    source={getServiceIconFromText(transaction.name, transaction.isIncome)}
+                    className="h-full w-full"
+                  />
+                </View>
                 <View className="flex-column justify-between">
                   <Text className="text-white text-xl font-black">{transaction.name}</Text>
                   <Text className="text-white text-sm opacity-50">{transaction.date}</Text>

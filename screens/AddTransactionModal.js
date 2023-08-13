@@ -24,6 +24,7 @@ export default function AddTransactionModal({
         amount: parseFloat(amount),
         isIncome,
         date: new Date().toLocaleDateString('ru-RU'),
+        cat: 'Other',
       };
 
       const existingTransactions = await AsyncStorage.getItem('transactions');

@@ -355,6 +355,34 @@ export const keywordsToIcons = {
     img: require('../assets/services/sushiwok.png'),
     cat: 'Restaurants',
   },
+  теремок: {
+    img: require('../assets/services/teremok.png'),
+    cat: 'Restaurants',
+  },
+  шашлыков: {
+    img: require('../assets/services/shashlikoff.png'),
+    cat: 'Restaurants',
+  },
+  шашлыкоф: {
+    img: require('../assets/services/shashlikoff.png'),
+    cat: 'Restaurants',
+  },
+  шашлыкофф: {
+    img: require('../assets/services/shashlikoff.png'),
+    cat: 'Restaurants',
+  },
+  вилкаложка: {
+    img: require('../assets/services/vilkalozhka.png'),
+    cat: 'Restaurants',
+  },
+  'вилка-ложка': {
+    img: require('../assets/services/vilkalozhka.png'),
+    cat: 'Restaurants',
+  },
+  'вилка ложка': {
+    img: require('../assets/services/vilkalozhka.png'),
+    cat: 'Restaurants',
+  },
   вкусвилл: {
     img: require('../assets/services/vkusvill.png'),
     cat: 'Shopping',
@@ -403,101 +431,196 @@ export const keywordsToIcons = {
     img: require('../assets/services/okei.png'),
     cat: 'Shopping',
   },
-  теремок: {
-    img: require('../assets/services/teremok.png'),
-    cat: 'Restaurants',
+  пятерочка: {
+    img: require('../assets/services/pyaterochka.png'),
+    cat: 'Shopping',
   },
-  шашлыков: {
-    img: require('../assets/services/shashlikoff.png'),
-    cat: 'Restaurants',
+  пятёрочка: {
+    img: require('../assets/services/pyaterochka.png'),
+    cat: 'Shopping',
   },
-  шашлыкоф: {
-    img: require('../assets/services/shashlikoff.png'),
-    cat: 'Restaurants',
+  магнит: {
+    img: require('../assets/services/magnit.png'),
+    cat: 'Shopping',
   },
-  шашлыкофф: {
-    img: require('../assets/services/shashlikoff.png'),
-    cat: 'Restaurants',
+  леруа: {
+    img: require('../assets/services/lerua.png'),
+    cat: 'Shopping',
   },
-  вилкаложка: {
-    img: require('../assets/services/vilkalozhka.png'),
-    cat: 'Restaurants',
+  эльдорадо: {
+    img: require('../assets/services/eldorado.png'),
+    cat: 'Shopping',
   },
-  'вилка-ложка': {
-    img: require('../assets/services/vilkalozhka.png'),
-    cat: 'Restaurants',
+  'м видео': {
+    img: require('../assets/services/mvideo.png'),
+    cat: 'Shopping',
   },
-  'вилка ложка': {
-    img: require('../assets/services/vilkalozhka.png'),
-    cat: 'Restaurants',
+  'м.видео': {
+    img: require('../assets/services/mvideo.png'),
+    cat: 'Shopping',
+  },
+  мвидео: {
+    img: require('../assets/services/mvideo.png'),
+    cat: 'Shopping',
+  },
+  'л`этуаль': {
+    img: require('../assets/services/letoile.png'),
+    cat: 'Shopping',
+  },
+  летуаль: {
+    img: require('../assets/services/letoile.png'),
+    cat: 'Shopping',
+  },
+  'л`етуаль': {
+    img: require('../assets/services/letoile.png'),
+    cat: 'Shopping',
+  },
+  лэтуаль: {
+    img: require('../assets/services/letoile.png'),
+    cat: 'Shopping',
+  },
+  самокат: {
+    img: require('../assets/services/samokat.png'),
+    cat: 'Shopping',
+  },
+  'детский мир': {
+    img: require('../assets/services/detmir.png'),
+    cat: 'Shopping',
+  },
+  зара: {
+    img: require('../assets/services/zara.png'),
+    cat: 'Shopping',
+  },
+  zara: {
+    img: require('../assets/services/zara.png'),
+    cat: 'Shopping',
+  },
+  'h&m': {
+    img: require('../assets/services/h&m.png'),
+    cat: 'Shopping',
+  },
+  спортмастер: {
+    img: require('../assets/services/sportmaset.png'),
+    cat: 'Shopping',
+  },
+  'спорт мастер': {
+    img: require('../assets/services/sportmaset.png'),
+    cat: 'Shopping',
+  },
+  найк: {
+    img: require('../assets/services/nike.png'),
+    cat: 'Shopping',
+  },
+  nike: {
+    img: require('../assets/services/nike.png'),
+    cat: 'Shopping',
+  },
+  адидас: {
+    img: require('../assets/services/adidas.png'),
+    cat: 'Shopping',
+  },
+  adidas: {
+    img: require('../assets/services/adidas.png'),
+    cat: 'Shopping',
+  },
+  'коммунальные услуги': {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  'комунальные услуги': {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  комуналка: {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  коммуналка: {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  комунальные: {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  коммунальные: {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  жилье: {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  жильё: {
+    img: require('../assets/services/communal.png'),
+    cat: 'Communal Services',
+  },
+  перевод: {
+    img: require('../assets/services/right-arrow.png'),
+    cat: 'Transfers',
+  },
+  поступление: {
+    img: require('../assets/services/arrow-left.png'),
+    cat: 'Transfers',
+  },
+  'перевод от': {
+    img: require('../assets/services/arrow-left.png'),
+    cat: 'Transfers',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
   Иксбокс: {
     img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
-  },
-  Иксбокс: {
-    img: require('../assets/services/xbox.png'),
-    cat: 'Restaurants',
+    cat: 'Shopping',
   },
 };
 
 export const getCategoryExpenses = (categoryName, transactions) => {
   const totalExpense = transactions.reduce((total, transaction) => {
+    const transactionCategory = keywordsToIcons[transaction.name.toLowerCase()]?.cat;
+
     if (
       transaction.isIncome === false &&
-      keywordsToIcons[transaction.name.toLowerCase()]?.cat === categoryName
+      (transactionCategory === categoryName ||
+        (transactionCategory === undefined && categoryName === 'Other'))
     ) {
       return total + transaction.amount;
     }
