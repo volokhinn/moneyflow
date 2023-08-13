@@ -496,7 +496,7 @@ export const keywordsToIcons = {
     cat: 'Shopping',
   },
   'h&m': {
-    img: require('../assets/services/h&m.png'),
+    img: require('../assets/services/hm.png'),
     cat: 'Shopping',
   },
   спортмастер: {
