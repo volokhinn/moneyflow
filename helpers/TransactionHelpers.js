@@ -585,3 +585,26 @@ export const getCategoryExpenses = (categoryName, transactions) => {
 
   return totalExpense;
 };
+
+export const getServiceIconFromText = (text, isIncome) => {
+  const lowercaseText = text.toLowerCase();
+
+  if (isIncome && lowercaseText.includes('перевод от')) {
+    return keywordsToIcons['перевод от'].img;
+  }
+  if (!isIncome && lowercaseText.includes('перевод')) {
+    return keywordsToIcons['перевод'].img;
+  }
+
+  for (const keyword in keywordsToIcons) {
+    if (lowercaseText.includes(keyword)) {
+      return keywordsToIcons[keyword].img;
+    }
+  }
+
+  if (isIncome) {
+    return require('../assets/services/arrow-left.png');
+  } else {
+    return require('../assets/services/right-arrow.png');
+  }
+};

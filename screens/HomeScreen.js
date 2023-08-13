@@ -1,8 +1,8 @@
 import { View, Text, ImageBackground, Image } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Swiper from 'react-native-swiper';
-import {keywordsToIcons} from '../helpers/TransactionHelpers';
+import { getServiceIconFromText } from '../helpers/TransactionHelpers';
 
 export default function HomeScreen({ transactions }) {
   const calculateIncome = () => {
@@ -27,7 +27,7 @@ export default function HomeScreen({ transactions }) {
 
   const lastThreeTransactions = transactions.slice(-3);
 
-  const status = ['Things may come', 'Things may come 111']
+  const status = ['Things may come', 'Things may come 111'];
 
   return (
     <View className="flex-1 justify-center items-center">
@@ -58,53 +58,67 @@ export default function HomeScreen({ transactions }) {
               className="p-3 rounded-xl">
               <Image source={require('../assets/img/lamp.png')} />
               <View className="h-40 mt-4">
-              <Swiper horizontal={false} width={100} loop autoplay autoplayTimeout={15} height={0} showsPagination={false}>
-                <View>
-                  <Text className="text-white text-[14px]">
-                    Things may come and go, but our bills are a constant. Keep them on track with ease
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  In order to understand that happiness is not in money, you first need to know both – happiness and money
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  Money won't buy you happiness, but it will buy you a yacht on which you will go in search of it
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  The whole advantage of having money is the ability to use it
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  Remember that money has the ability to multiply
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  Rich is the one who receives more than he spends; poor is the one whose spending exceeds income
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  Spending money on unnecessary things, you will have little money for what is necessary
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  Money is just a means. They will lead you to any goal, but they will not replace you at the helm
-                  </Text>
-                </View>
-                <View>
-                  <Text className="text-white text-[14px]">
-                  Learn to save while you earn a little. You will be able to do this when you start earning more
-                  </Text>
-                </View>
-              </Swiper>
+                <Swiper
+                  horizontal={false}
+                  width={100}
+                  loop
+                  autoplay
+                  autoplayTimeout={15}
+                  height={0}
+                  showsPagination={false}>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      Things may come and go, but our bills are a constant. Keep them on track with
+                      ease
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      In order to understand that happiness is not in money, you first need to know
+                      both – happiness and money
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      Money won't buy you happiness, but it will buy you a yacht on which you will
+                      go in search of it
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      The whole advantage of having money is the ability to use it
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      Remember that money has the ability to multiply
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      Rich is the one who receives more than he spends; poor is the one whose
+                      spending exceeds income
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      Spending money on unnecessary things, you will have little money for what is
+                      necessary
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      Money is just a means. They will lead you to any goal, but they will not
+                      replace you at the helm
+                    </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[14px]">
+                      Learn to save while you earn a little. You will be able to do this when you
+                      start earning more
+                    </Text>
+                  </View>
+                </Swiper>
               </View>
             </LinearGradient>
           </View>
@@ -114,16 +128,10 @@ export default function HomeScreen({ transactions }) {
           {transactions.length ? (
             lastThreeTransactions.map((transaction, index) => (
               <View key={index} className="flex-row justify-between items-center my-2">
-                {transaction.name.toLowerCase().replace(/\s/g, '') in keywordsToIcons ? (
-                  <Image
-                    source={keywordsToIcons[transaction.name.toLowerCase()]?.img}
-                    className="h-10 w-10"
-                  />
-                ) : transaction.isIncome ? (
-                  <Image source={require('../assets/adaptive-icon.png')} className="h-10 w-10" />
-                ) : (
-                  <Image source={require('../assets/favicon.png')} className="h-10 w-10" />
-                )}
+                <Image
+                  source={getServiceIconFromText(transaction.name, transaction.isIncome)}
+                  className="h-10 w-10"
+                />
                 <View className="flex-column justify-between">
                   <Text className="text-white text-xl font-black">{transaction.name}</Text>
                   <Text className="text-white text-sm opacity-50">{transaction.date}</Text>

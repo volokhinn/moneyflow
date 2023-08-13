@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import Modal from 'react-native-modal';
-import { XMarkIcon } from 'react-native-heroicons/outline';
-import { BlurView } from 'expo-blur';
 import { Checkbox } from 'expo-checkbox';
 import { KeyboardAvoidingView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function AddTransactionModal({
-  isVisible,
-  onClose,
-  onSaveTransaction,
-  updateTransactions,
-}) {
+export default function AddTransactionModal({ isVisible, onClose, updateTransactions }) {
   const [transactionName, setTransactionName] = useState('');
   const [amount, setAmount] = useState('');
   const [isIncome, setIsIncome] = useState(true);
+  const [error, setError] = useState(false);
 
   const handleSaveTransaction = async () => {
     try {
@@ -26,6 +20,11 @@ export default function AddTransactionModal({
         date: new Date().toLocaleDateString('ru-RU'),
         cat: 'Other',
       };
+
+      if (!newTransaction.name || isNaN(newTransaction.amount)) {
+        setError(true);
+        return;
+      }
 
       const existingTransactions = await AsyncStorage.getItem('transactions');
       let transactions = [];
@@ -38,13 +37,13 @@ export default function AddTransactionModal({
 
       await AsyncStorage.setItem('transactions', JSON.stringify(transactions));
 
-      // После успешного сохранения вызываем функцию для обновления данных
       updateTransactions(transactions);
 
       setTransactionName('');
       setAmount('');
       setIsIncome(true);
       onClose();
+      setError(false);
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
@@ -63,9 +62,6 @@ export default function AddTransactionModal({
         <View
           className="bg-opacity-50 h-fit w-full p-4 rounded-2xl"
           style={{ backgroundColor: 'rgba(255,255,255,0.3)', blur: 60 }}>
-          {/* <TouchableOpacity onPress={onClose} className="self-end">
-            <XMarkIcon size={25} color={'black'} />
-          </TouchableOpacity> */}
           <View className="w-28 h-1 rounded-full bg-white self-center mt-2"></View>
           <View className="flex-row items-center mt-10">
             <Checkbox
@@ -99,7 +95,7 @@ export default function AddTransactionModal({
             }}
           />
           <TextInput
-            placeholder="500 P"
+            placeholder="10 $"
             value={amount}
             onChangeText={setAmount}
             keyboardType="numeric"
@@ -112,6 +108,11 @@ export default function AddTransactionModal({
               borderColor: 'rgba(255,255,255,0.5)',
             }}
           />
+          {error && (
+            <Text className="text-md mt-5 text-red-500 font-bold">
+              All fields of the form must be filled in
+            </Text>
+          )}
           <TouchableOpacity onPress={handleSaveTransaction} className="mt-10">
             <Text
               className="text-white text-xl rounded-full self-center py-1 px-5"

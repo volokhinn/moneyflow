@@ -1,32 +1,9 @@
 import { View, Text, Image, ScrollView } from 'react-native';
 import React, { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
-import { keywordsToIcons } from '../helpers/TransactionHelpers';
+import { getServiceIconFromText } from '../helpers/TransactionHelpers';
 
 export default function BillsScreen({ transactions }) {
-  function getServiceIconFromText(text, isIncome) {
-    const lowercaseText = text.toLowerCase();
-
-    if (isIncome && lowercaseText.includes('перевод от')) {
-      return keywordsToIcons['перевод от'].img;
-    }
-    if (!isIncome && lowercaseText.includes('перевод')) {
-      return keywordsToIcons['перевод'].img;
-    }
-
-    for (const keyword in keywordsToIcons) {
-      if (lowercaseText.includes(keyword)) {
-        return keywordsToIcons[keyword].img;
-      }
-    }
-
-    if (isIncome) {
-      return require('../assets/services/arrow-left.png');
-    } else {
-      return require('../assets/services/right-arrow.png');
-    }
-  }
-
   return (
     <>
       <View>
