@@ -27,8 +27,6 @@ export default function HomeScreen({ transactions }) {
 
   const lastThreeTransactions = transactions.slice(-3);
 
-  const status = ['Things may come', 'Things may come 111'];
-
   return (
     <View className="flex-1 justify-center items-center">
       <ImageBackground

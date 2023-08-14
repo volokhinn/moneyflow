@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { ArrowRightIcon } from 'react-native-heroicons/outline';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,7 +8,7 @@ export default function WelcomeScreen({ navigation, isNewUser }) {
     if (isNewUser) {
       navigation.navigate('CreatePin');
     } else {
-      navigation.navigate('Home'); // Перенаправляем на главный экран, если пользователь не новый
+      navigation.navigate('Home');
     }
   };
 

@@ -34,7 +34,6 @@ const AppNavigation = ({ isNewNewUser }) => {
   const [isPinEntered, setIsPinEntered] = useState(false);
 
   useEffect(() => {
-    // Проверяем, был ли введен пин-код
     const checkPinEntered = async () => {
       try {
         const enteredPin = await AsyncStorage.getItem('enteredPin');
@@ -58,7 +57,6 @@ const AppNavigation = ({ isNewNewUser }) => {
     setTransactions(updatedTransactions);
   };
 
-  // Функция для получения транзакций из хранилища при загрузке компонента
   const fetchTransactions = async () => {
     try {
       const transactionsData = await AsyncStorage.getItem('transactions');
@@ -72,7 +70,6 @@ const AppNavigation = ({ isNewNewUser }) => {
   };
 
   useEffect(() => {
-    // Получаем транзакции из хранилища при загрузке компонента
     fetchTransactions();
   }, []);
 
@@ -101,7 +98,6 @@ const AppNavigation = ({ isNewNewUser }) => {
     }
   };
 
-  // Функция для сохранения транзакции в хранилище
   const handleSaveTransaction = async (transactionData) => {
     try {
       if (transactionData) {
@@ -109,7 +105,7 @@ const AppNavigation = ({ isNewNewUser }) => {
         setTransactions(updatedTransactions);
         await AsyncStorage.setItem('transactions', JSON.stringify(updatedTransactions));
 
-        fetchTransactionDataByMonth(); // Обновляем данные для графика
+        fetchTransactionDataByMonth();
       }
     } catch (error) {
       console.error('Error saving transaction:', error);
@@ -121,14 +117,14 @@ const AppNavigation = ({ isNewNewUser }) => {
       await AsyncStorage.removeItem('transactions');
       setTransactions([]);
 
-      fetchTransactionDataByMonth(); // Обновляем данные для графика
+      fetchTransactionDataByMonth();
     } catch (error) {
       console.error('Error clearing transactions:', error);
     }
   };
 
   const fetchTransactionData = () => {
-    fetchTransactionDataByMonth(); // Здесь вызывается функция из компонента StatsScreen
+    fetchTransactionDataByMonth();
   };
 
   return (

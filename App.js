@@ -12,10 +12,9 @@ NavigationBar.setBackgroundColorAsync('#000');
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isNewNewUser, setIsNNewewUser] = useState(true); // Добавляем состояние для isNewUser
+  const [isNewNewUser, setIsNNewewUser] = useState(true);
 
   useEffect(() => {
-    // Загружаем isNewUser из AsyncStorage
     const loadIsNewUser = async () => {
       try {
         const savedIsNewUser = await AsyncStorage.getItem('isNewUser');
@@ -28,7 +27,7 @@ export default function App() {
     };
 
     setTimeout(() => {
-      loadIsNewUser(); // Загружаем isNewUser после прелоадера
+      loadIsNewUser();
     }, 3000);
   }, []);
 
@@ -38,7 +37,6 @@ export default function App() {
   });
 
   if (!fontLoaded) {
-    // Верните компонент загрузки шрифтов
     return (
       <View className="flex-1 bg-black">
         <Text className="text-white text-4xl font-black text-center mt-32">Moneyflow</Text>
@@ -56,7 +54,7 @@ export default function App() {
           <LottieView source={require('./assets/animation_ll920dee.json')} autoPlay loop />
         </View>
       ) : (
-        <AppNavigation isNewNewUser={isNewNewUser} /> // Передаем isNewUser в AppNavigation
+        <AppNavigation isNewNewUser={isNewNewUser} />
       )}
     </>
   );

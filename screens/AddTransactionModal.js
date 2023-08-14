@@ -81,7 +81,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
       onClose();
       setError(false);
       setSelectedQuickTransactionIcon(null);
-      setSelectedQuickTransactionCategory(null); // Сброс выбранной категории
+      setSelectedQuickTransactionCategory(null);
     } catch (error) {
       console.error('Error saving transaction:', error);
     }

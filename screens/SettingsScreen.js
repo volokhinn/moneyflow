@@ -15,8 +15,8 @@ export default function SettingsScreen({
   const handleClearTransactions = async () => {
     try {
       await AsyncStorage.removeItem('transactions');
-      onClearTransactions(); // Вызываем функцию для очистки транзакций
-      fetchTransactionDataByMonth(transactions); // Вызываем функцию для обновления данных графика
+      onClearTransactions();
+      fetchTransactionDataByMonth(transactions);
       Alert.alert('Success', 'All transactions have been cleared.');
     } catch (error) {
       console.error('Error clearing transactions:', error);

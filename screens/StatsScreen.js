@@ -6,7 +6,7 @@ import { keywordsToIcons, getCategoryExpenses } from '../helpers/TransactionHelp
 
 export default function StatsScreen({ transactions }) {
   const [monthData, setMonthData] = useState([]);
-  const [selectedPeriod, setSelectedPeriod] = useState('Last week'); // Изначально выбран "Last week"
+  const [selectedPeriod, setSelectedPeriod] = useState('Last week');
   const [periodExpenses, setPeriodExpenses] = useState(0);
 
   useEffect(() => {
