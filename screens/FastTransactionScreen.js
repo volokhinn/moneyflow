@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { keywordsToIcons } from '../helpers/TransactionHelpers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,7 +9,20 @@ export default function FastTransactionScreen() {
   const [transactionName, setTransactionName] = useState('');
   const [selectedIcon, setSelectedIcon] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [quickTransactions, setQuickTransactions] = useState([]);
   const navigation = useNavigation();
+
+  const fetchQuickTransactions = async () => {
+    try {
+      const quickTransactionsData = await AsyncStorage.getItem('quickTransactions');
+      if (quickTransactionsData) {
+        const parsedQuickTransactions = JSON.parse(quickTransactionsData);
+        setQuickTransactions(parsedQuickTransactions);
+      }
+    } catch (error) {
+      console.error('Error fetching quick transactions:', error);
+    }
+  };
 
   const uniqueQuickTransactionIcons = Array.from(
     new Set(Object.values(keywordsToIcons).map((item) => item.img)),
@@ -53,6 +66,22 @@ export default function FastTransactionScreen() {
       console.error('Error saving quick transaction:', error);
     }
   };
+
+  const handleDeleteQuickTransaction = async (index) => {
+    try {
+      const updatedQuickTransactions = [...quickTransactions];
+      updatedQuickTransactions.splice(index, 1);
+
+      await AsyncStorage.setItem('quickTransactions', JSON.stringify(updatedQuickTransactions));
+      setQuickTransactions(updatedQuickTransactions);
+    } catch (error) {
+      console.error('Error deleting quick transaction:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuickTransactions();
+  }, [quickTransactions]);
 
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: 'red' }}>
@@ -104,10 +133,43 @@ export default function FastTransactionScreen() {
             padding: 10,
             textAlign: 'center',
             borderRadius: 5,
+            marginTop: 10,
           }}>
           Save Custom Transaction
         </Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+        <Text
+          style={{
+            backgroundColor: 'blue',
+            color: 'white',
+            padding: 10,
+            textAlign: 'center',
+            borderRadius: 5,
+          }}>
+          Back
+        </Text>
+      </TouchableOpacity>
+      <ScrollView>
+        {quickTransactions.length ? (
+          quickTransactions.map((quickTransaction, index) => (
+            <View
+              key={index}
+              style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+              <Text style={{ flex: 1 }}>{quickTransaction.name}</Text>
+              <TouchableOpacity onPress={() => handleDeleteQuickTransaction(index)}>
+                <Text style={{ color: 'blue' }}>Удалить</Text>
+              </TouchableOpacity>
+            </View>
+          ))
+        ) : (
+          <View>
+            <Text className="text-md text-white text-center">
+              Your quick transactions will be displayed here
+            </Text>
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 }
