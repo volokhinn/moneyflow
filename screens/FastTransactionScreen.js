@@ -9,10 +9,9 @@ export default function FastTransactionScreen() {
   const [selectedIcon, setSelectedIcon] = useState(null);
   const navigation = useNavigation();
 
-  const customIcons = Object.entries(keywordsToIcons).map(([keyword, data]) => ({
-    keyword,
-    iconPath: data.img,
-  }));
+  const uniqueQuickTransactionIcons = Array.from(
+    new Set(Object.values(keywordsToIcons).map((item) => item.img)),
+  );
 
   const handleIconPress = (iconPath) => {
     setSelectedIcon(iconPath);
@@ -21,7 +20,6 @@ export default function FastTransactionScreen() {
   const handleSaveCustomTransaction = async () => {
     try {
       if (transactionName && selectedIcon !== null) {
-        // Проверьте, было ли выбрано имя и иконка
         const newQuickTransaction = {
           name: transactionName,
           iconPath: selectedIcon,
@@ -42,7 +40,7 @@ export default function FastTransactionScreen() {
           transactionName: transactionName,
         });
       } else {
-        navigation.navigate('Settings'); // Обычный переход, если нет выбранной иконки
+        navigation.navigate('Settings');
       }
 
       navigation.navigate('Settings');
@@ -66,12 +64,12 @@ export default function FastTransactionScreen() {
         }}
       />
       <ScrollView horizontal>
-        {customIcons.map((item) => (
+        {uniqueQuickTransactionIcons.map((iconSource, index) => (
           <TouchableOpacity
-            key={item.keyword}
+            key={index}
             style={{ margin: 10 }}
-            onPress={() => handleIconPress(item.iconPath)}>
-            <Image source={item.iconPath} style={{ width: 50, height: 50 }} />
+            onPress={() => setSelectedIcon(iconSource)}>
+            <Image source={iconSource} style={{ width: 50, height: 50 }} />
           </TouchableOpacity>
         ))}
       </ScrollView>
