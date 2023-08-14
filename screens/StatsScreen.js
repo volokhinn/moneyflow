@@ -92,7 +92,6 @@ export default function StatsScreen({ transactions }) {
     return total;
   }, 0);
 
-  console.log('Stats:', transactions);
   return (
     <View>
       <ImageBackground

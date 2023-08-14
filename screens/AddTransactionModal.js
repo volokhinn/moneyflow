@@ -35,13 +35,14 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
 
   const quick = quickTransactions.map((quickTransaction, index) => (
     <TouchableOpacity
+      className="mr-3 mt-3"
       key={index}
       onPress={() => {
         setTransactionName(quickTransaction.name);
         setSelectedQuickTransactionIcon(quickTransaction.iconPath);
         setSelectedQuickTransactionCategory(quickTransaction.cat);
       }}>
-      <Text>{quickTransaction.name}</Text>
+      <Text className="bg-white text-black px-4 py-2 rounded-md">{quickTransaction.name}</Text>
     </TouchableOpacity>
   ));
 
@@ -55,8 +56,6 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
         cat: selectedQuickTransactionCategory ? selectedQuickTransactionCategory : 'Other',
         iconPath: selectedQuickTransactionIcon,
       };
-
-      console.log('Selected Quick Transaction Category:', selectedQuickTransactionCategory);
 
       if (!newTransaction.name || isNaN(newTransaction.amount)) {
         setError(true);
@@ -147,7 +146,6 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
               borderColor: 'rgba(255,255,255,0.5)',
             }}
           />
-          <Text>Quick Transactions:</Text>
           <ScrollView horizontal>{quick}</ScrollView>
           {error && (
             <Text className="text-md mt-5 text-red-500 font-bold">

@@ -61,15 +61,18 @@ export default function SettingsScreen({
           <TouchableOpacity
             className="px-4 py-2 m-4 rounded-md bg-white"
             onPress={() => navigation.navigate('FastTransaction')}>
-            <Text className="text-black text-xl font-bold">Add quick transaction</Text>
+            <Text className="text-black text-xl font-bold">Edit quick transactions</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleClearQuickTransactions}
             className="px-4 py-2 m-4 rounded-md bg-white">
             <Text className="text-black text-xl font-bold">Clear Quick Transactions</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleResetNewUser}>
-            <Text className="text-white text-center">Reset isNewUser</Text>
+          <Text className="text-white text-4xl font-black my-5 mx-4">Dev tools</Text>
+          <TouchableOpacity
+            onPress={handleResetNewUser}
+            className="px-4 py-2 m-4 rounded-md bg-white">
+            <Text className="text-black text-xl font-bold">Reset isNewUser</Text>
           </TouchableOpacity>
         </ImageBackground>
       </View>

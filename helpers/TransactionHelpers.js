@@ -577,7 +577,7 @@ export const getCategoryExpenses = (categoryName, transactions) => {
     if (
       transaction.isIncome === false &&
       (transactionCategory === categoryName ||
-        categoryName === 'Other' ||
+        (categoryName === 'Other' && !transaction.iconPath) ||
         (categoryName === quickTransactionCategory && transaction.iconPath))
     ) {
       return total + transaction.amount;
