@@ -3,10 +3,12 @@ import { View, Text, TextInput, ScrollView, TouchableOpacity, Image } from 'reac
 import { keywordsToIcons } from '../helpers/TransactionHelpers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
 
 export default function FastTransactionScreen() {
   const [transactionName, setTransactionName] = useState('');
   const [selectedIcon, setSelectedIcon] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const navigation = useNavigation();
 
   const uniqueQuickTransactionIcons = Array.from(
@@ -19,10 +21,11 @@ export default function FastTransactionScreen() {
 
   const handleSaveCustomTransaction = async () => {
     try {
-      if (transactionName && selectedIcon !== null) {
+      if (transactionName && selectedIcon !== null && selectedCategory !== null) {
         const newQuickTransaction = {
           name: transactionName,
           iconPath: selectedIcon,
+          cat: selectedCategory,
         };
 
         const existingQuickTransactions = await AsyncStorage.getItem('quickTransactions');
@@ -31,6 +34,8 @@ export default function FastTransactionScreen() {
         if (existingQuickTransactions) {
           quickTransactions = JSON.parse(existingQuickTransactions);
         }
+
+        console.log(newQuickTransaction);
 
         quickTransactions.push(newQuickTransaction);
 
@@ -73,6 +78,24 @@ export default function FastTransactionScreen() {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <Picker
+        selectedValue={selectedCategory}
+        onValueChange={(itemValue) => setSelectedCategory(itemValue)}
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+          padding: 10,
+          marginBottom: 20,
+          borderRadius: 5,
+        }}>
+        <Picker.Item label="Select a category" value={null} />
+        <Picker.Item label="Entertaiments" value="Entertaiments" />
+        <Picker.Item label="Restaurants" value="Restaurants" />
+        <Picker.Item label="Communal services" value="Communal services" />
+        <Picker.Item label="Shopping" value="Shopping" />
+        <Picker.Item label="Transfers" value="Transfers" />
+        <Picker.Item label="Other" value="Other" />
+      </Picker>
+
       <TouchableOpacity onPress={handleSaveCustomTransaction}>
         <Text
           style={{

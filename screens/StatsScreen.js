@@ -11,7 +11,7 @@ export default function StatsScreen({ transactions }) {
 
   useEffect(() => {
     fetchTransactionDataByMonth(transactions);
-    updatePeriodExpenses(selectedPeriod);
+    setPeriodExpenses(updatePeriodExpenses(selectedPeriod));
   }, [transactions, selectedPeriod]);
 
   const fetchTransactionDataByMonth = (transactions) => {
@@ -92,6 +92,7 @@ export default function StatsScreen({ transactions }) {
     return total;
   }, 0);
 
+  console.log('Stats:', transactions);
   return (
     <View>
       <ImageBackground

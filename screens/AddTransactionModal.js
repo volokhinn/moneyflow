@@ -13,10 +13,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
   const [error, setError] = useState(false);
   const [quickTransactions, setQuickTransactions] = useState([]);
   const [selectedQuickTransactionIcon, setSelectedQuickTransactionIcon] = useState(null);
-
-  useEffect(() => {
-    fetchQuickTransactions();
-  }, []);
+  const [selectedQuickTransactionCategory, setSelectedQuickTransactionCategory] = useState(null);
 
   const fetchQuickTransactions = async () => {
     try {
@@ -42,6 +39,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
       onPress={() => {
         setTransactionName(quickTransaction.name);
         setSelectedQuickTransactionIcon(quickTransaction.iconPath);
+        setSelectedQuickTransactionCategory(quickTransaction.cat);
       }}>
       <Text>{quickTransaction.name}</Text>
     </TouchableOpacity>
@@ -54,9 +52,11 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
         amount: parseFloat(amount),
         isIncome,
         date: new Date().toLocaleDateString('ru-RU'),
-        cat: 'Other',
+        cat: selectedQuickTransactionCategory ? selectedQuickTransactionCategory : 'Other',
         iconPath: selectedQuickTransactionIcon,
       };
+
+      console.log('Selected Quick Transaction Category:', selectedQuickTransactionCategory);
 
       if (!newTransaction.name || isNaN(newTransaction.amount)) {
         setError(true);
@@ -82,10 +82,12 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
       onClose();
       setError(false);
       setSelectedQuickTransactionIcon(null);
+      setSelectedQuickTransactionCategory(null); // Сброс выбранной категории
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
   };
+
   return (
     <Modal
       isVisible={isVisible}

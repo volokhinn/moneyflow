@@ -572,11 +572,13 @@ export const keywordsToIcons = {
 export const getCategoryExpenses = (categoryName, transactions) => {
   const totalExpense = transactions.reduce((total, transaction) => {
     const transactionCategory = keywordsToIcons[transaction.name.toLowerCase()]?.cat;
+    const quickTransactionCategory = transaction.cat;
 
     if (
       transaction.isIncome === false &&
       (transactionCategory === categoryName ||
-        (transactionCategory === undefined && categoryName === 'Other'))
+        categoryName === 'Other' ||
+        (categoryName === quickTransactionCategory && transaction.iconPath))
     ) {
       return total + transaction.amount;
     }
