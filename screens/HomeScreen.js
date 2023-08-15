@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, Image } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Swiper from 'react-native-swiper';
 import { getServiceIconFromText } from '../helpers/TransactionHelpers';

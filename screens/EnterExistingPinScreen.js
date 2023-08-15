@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -33,7 +33,7 @@ const EnterExistingPinScreen = ({ navigation }) => {
     }
   }, [existingEnteredPin]);
 
-  const checkPin = async () => {
+  const checkPin = useMemo(() => async () => {
     try {
       const savedPin = await AsyncStorage.getItem('pin');
       if (existingEnteredPin === savedPin) {
@@ -57,7 +57,7 @@ const EnterExistingPinScreen = ({ navigation }) => {
     } catch (error) {
       console.error('Error checking pin:', error);
     }
-  };
+  });
 
   return (
     <View>

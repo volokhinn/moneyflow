@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { Checkbox } from 'expo-checkbox';
@@ -15,7 +15,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
   const [selectedQuickTransactionIcon, setSelectedQuickTransactionIcon] = useState(null);
   const [selectedQuickTransactionCategory, setSelectedQuickTransactionCategory] = useState(null);
 
-  const fetchQuickTransactions = async () => {
+  const fetchQuickTransactions = useMemo(() => async () => {
     try {
       const quickTransactionsData = await AsyncStorage.getItem('quickTransactions');
       if (quickTransactionsData) {
@@ -25,7 +25,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
     } catch (error) {
       console.error('Error fetching quick transactions:', error);
     }
-  };
+  });
 
   useEffect(() => {
     if (isVisible) {
@@ -46,7 +46,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
     </TouchableOpacity>
   ));
 
-  const handleSaveTransaction = async () => {
+  const handleSaveTransaction = useMemo(() => async () => {
     try {
       const newTransaction = {
         name: transactionName,
@@ -85,7 +85,7 @@ export default function AddTransactionModal({ isVisible, onClose, updateTransact
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
-  };
+  });
 
   return (
     <Modal

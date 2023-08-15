@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
@@ -14,7 +14,7 @@ export default function StatsScreen({ transactions }) {
     setPeriodExpenses(updatePeriodExpenses(selectedPeriod));
   }, [transactions, selectedPeriod]);
 
-  const fetchTransactionDataByMonth = (transactions) => {
+  const fetchTransactionDataByMonth = useMemo(() => (transactions) => {
     const dataByMonth = new Array(12).fill(0);
 
     transactions.forEach((transaction) => {
@@ -25,7 +25,7 @@ export default function StatsScreen({ transactions }) {
     });
 
     setMonthData(dataByMonth);
-  };
+  });
 
   const updatePeriodExpenses = (period) => {
     const periodTotalExpenses = getPeriodExpenses(period, transactions);

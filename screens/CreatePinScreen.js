@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -28,7 +28,7 @@ const CreatePinScreen = ({ navigation }) => {
     }
   }, [enteredPin]);
 
-  const savePin = async () => {
+  const savePin = useMemo(() => async () => {
     try {
       await AsyncStorage.setItem('pin', enteredPin);
       await AsyncStorage.setItem('isNewUser', 'false');
@@ -36,7 +36,7 @@ const CreatePinScreen = ({ navigation }) => {
     } catch (error) {
       console.error('Error saving pin:', error);
     }
-  };
+  });
 
   return (
     <View>

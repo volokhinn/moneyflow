@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,7 +12,7 @@ export default function SettingsScreen({
   setIsPinEntered,
   isPinEntered,
 }) {
-  const handleClearTransactions = async () => {
+  const handleClearTransactions = useMemo(() => async () => {
     try {
       await AsyncStorage.removeItem('transactions');
       onClearTransactions();
@@ -22,23 +22,25 @@ export default function SettingsScreen({
       console.error('Error clearing transactions:', error);
       Alert.alert('Error', 'Failed to clear transactions.');
     }
-  };
+  });
 
-  const handleResetNewUser = async () => {
+  const handleResetNewUser = useMemo(() => async () => {
     try {
       await AsyncStorage.setItem('isNewUser', 'true');
+      Alert.alert('Success', 'isNewUser is cleared');
     } catch (error) {
       console.error('Error resetting isNewUser:', error);
     }
-  };
+  });
 
-  const handleClearQuickTransactions = async () => {
+  const handleClearQuickTransactions = useMemo(() => async () => {
     try {
       await AsyncStorage.setItem('quickTransactions', '[]');
+      Alert.alert('Success', 'All quick transactions have been cleared.');
     } catch (error) {
       console.error('Error clearing quick transactions:', error);
     }
-  };
+  });
 
   return (
     <>

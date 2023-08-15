@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -20,7 +20,7 @@ export default function FastTransactionScreen() {
   const [quickTransactions, setQuickTransactions] = useState([]);
   const navigation = useNavigation();
 
-  const fetchQuickTransactions = async () => {
+  const fetchQuickTransactions = useMemo(() => async () => {
     try {
       const quickTransactionsData = await AsyncStorage.getItem('quickTransactions');
       if (quickTransactionsData) {
@@ -30,7 +30,7 @@ export default function FastTransactionScreen() {
     } catch (error) {
       console.error('Error fetching quick transactions:', error);
     }
-  };
+  });
 
   const uniqueQuickTransactionIcons = Array.from(
     new Set(Object.values(keywordsToIcons).map((item) => item.img)),
@@ -40,7 +40,7 @@ export default function FastTransactionScreen() {
     setSelectedIcon(iconPath);
   };
 
-  const handleSaveCustomTransaction = async () => {
+  const handleSaveCustomTransaction = useMemo(() => async () => {
     try {
       if (transactionName && selectedIcon !== null && selectedCategory !== null) {
         const newQuickTransaction = {
@@ -75,9 +75,9 @@ export default function FastTransactionScreen() {
     } catch (error) {
       console.error('Error saving quick transaction:', error);
     }
-  };
+  });
 
-  const handleDeleteQuickTransaction = async (index) => {
+  const handleDeleteQuickTransaction = useMemo(() => async (index) => {
     try {
       const updatedQuickTransactions = [...quickTransactions];
       updatedQuickTransactions.splice(index, 1);
@@ -87,7 +87,7 @@ export default function FastTransactionScreen() {
     } catch (error) {
       console.error('Error deleting quick transaction:', error);
     }
-  };
+  });
 
   useEffect(() => {
     fetchQuickTransactions();
@@ -159,7 +159,7 @@ export default function FastTransactionScreen() {
               <Picker.Item label="Select a category" value={null} />
               <Picker.Item label="Entertaiments" value="Entertaiments" />
               <Picker.Item label="Restaurants" value="Restaurants" />
-              <Picker.Item label="Communal services" value="Communal services" />
+              <Picker.Item label="Communal Services" value="Communal Services" />
               <Picker.Item label="Shopping" value="Shopping" />
               <Picker.Item label="Transfers" value="Transfers" />
             </Picker>

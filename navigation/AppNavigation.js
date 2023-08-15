@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
@@ -57,7 +57,7 @@ const AppNavigation = ({ isNewNewUser }) => {
     setTransactions(updatedTransactions);
   };
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useMemo(() => async () => {
     try {
       const transactionsData = await AsyncStorage.getItem('transactions');
       if (transactionsData) {
@@ -67,13 +67,13 @@ const AppNavigation = ({ isNewNewUser }) => {
     } catch (error) {
       console.error('Error fetching transactions:', error);
     }
-  };
+  });
 
   useEffect(() => {
     fetchTransactions();
   }, []);
 
-  const fetchTransactionDataByMonth = async () => {
+  const fetchTransactionDataByMonth = useMemo(() => async () => {
     try {
       const transactionsData = await AsyncStorage.getItem('transactions');
       if (transactionsData) {
@@ -96,9 +96,9 @@ const AppNavigation = ({ isNewNewUser }) => {
       console.error('Error fetching transaction data by month:', error);
       return new Array(12).fill(0);
     }
-  };
+  });
 
-  const handleSaveTransaction = async (transactionData) => {
+  const handleSaveTransaction = useMemo(() => async (transactionData) => {
     try {
       if (transactionData) {
         const updatedTransactions = [...transactions, transactionData];
@@ -110,9 +110,9 @@ const AppNavigation = ({ isNewNewUser }) => {
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
-  };
+  });
 
-  const handleClearTransactions = async () => {
+  const handleClearTransactions = useMemo(() => async () => {
     try {
       await AsyncStorage.removeItem('transactions');
       setTransactions([]);
@@ -121,7 +121,7 @@ const AppNavigation = ({ isNewNewUser }) => {
     } catch (error) {
       console.error('Error clearing transactions:', error);
     }
-  };
+  });
 
   const fetchTransactionData = () => {
     fetchTransactionDataByMonth();
