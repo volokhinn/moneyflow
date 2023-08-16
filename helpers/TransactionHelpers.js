@@ -567,6 +567,14 @@ export const keywordsToIcons = {
     img: require('../assets/services/arrow-left.png'),
     cat: 'Transfers',
   },
+  custom1: {
+    img: require('../assets/services/proezdmetro.png'),
+    cat: 'Other',
+  },
+  custom2: {
+    img: require('../assets/services/proezdtaxi.png'),
+    cat: 'Other',
+  },
 };
 
 export const getCategoryExpenses = (categoryName, transactions) => {
