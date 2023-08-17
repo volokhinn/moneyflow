@@ -12,22 +12,10 @@ NavigationBar.setBackgroundColorAsync('#000');
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isNewNewUser, setIsNNewewUser] = useState(true);
 
   useEffect(() => {
-    const loadIsNewUser = async () => {
-      try {
-        const savedIsNewUser = await AsyncStorage.getItem('isNewUser');
-        setIsNNewewUser(savedIsNewUser === 'true');
-      } catch (error) {
-        console.error('Error loading isNewUser:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     setTimeout(() => {
-      loadIsNewUser();
+      setIsLoading(false);
     }, 3000);
   }, []);
 
@@ -54,7 +42,7 @@ export default function App() {
           <LottieView source={require('./assets/animation_ll920dee.json')} autoPlay loop />
         </View>
       ) : (
-        <AppNavigation isNewNewUser={isNewNewUser} />
+        <AppNavigation />
       )}
     </>
   );

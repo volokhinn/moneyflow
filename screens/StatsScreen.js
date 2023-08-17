@@ -152,24 +152,39 @@ export default function StatsScreen({ transactions }) {
           <View className="mx-1 flex-row justify-between">
             <TouchableOpacity
               className={`py-2 px-4 rounded-full border-white border-[1px] ${
-                selectedPeriod === 'Last week' ? 'bg-black' : ''
+                selectedPeriod === 'Last week' ? 'bg-white border-black' : ''
               }`}
               onPress={() => setSelectedPeriod('Last week')}>
-              <Text className="text-white text-sm">Last week</Text>
+              <Text
+                className={`text-sm ${
+                  selectedPeriod === 'Last week' ? 'text-black' : 'text-white'
+                }`}>
+                Last week
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               className={`py-2 px-4 rounded-full border-white border-[1px] ${
-                selectedPeriod === 'Last month' ? 'bg-black' : ''
+                selectedPeriod === 'Last month' ? 'bg-white border-black' : ''
               }`}
               onPress={() => setSelectedPeriod('Last month')}>
-              <Text className="text-white text-sm">Last month</Text>
+              <Text
+                className={`text-sm ${
+                  selectedPeriod === 'Last month' ? 'text-black' : 'text-white'
+                }`}>
+                Last month
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               className={`py-2 px-4 rounded-full border-white border-[1px] ${
-                selectedPeriod === 'Last year' ? 'bg-black' : ''
+                selectedPeriod === 'Last year' ? 'bg-white border-black' : ''
               }`}
               onPress={() => setSelectedPeriod('Last year')}>
-              <Text className="text-white text-sm">Last year</Text>
+              <Text
+                className={`text-sm ${
+                  selectedPeriod === 'Last year' ? 'text-black' : 'text-white'
+                }`}>
+                Last year
+              </Text>
             </TouchableOpacity>
           </View>
           <View className="flex-row space-x-4 mx-1 mt-6 mb-2">

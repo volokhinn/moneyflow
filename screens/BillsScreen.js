@@ -4,7 +4,6 @@ import { ImageBackground } from 'react-native';
 import { getServiceIconFromText } from '../helpers/TransactionHelpers';
 
 export default function BillsScreen({ transactions }) {
-  console.log(transactions);
   return (
     <>
       <View>

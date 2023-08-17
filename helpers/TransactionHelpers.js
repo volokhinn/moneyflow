@@ -323,14 +323,14 @@ export const keywordsToIcons = {
     img: require('../assets/services/starbucks.png'),
     cat: 'Restaurants',
   },
-  coffeemania: {
-    img: require('../assets/services/coffeemania.png'),
-    cat: 'Restaurants',
-  },
-  кофемания: {
-    img: require('../assets/services/coffeemania.png'),
-    cat: 'Restaurants',
-  },
+  // coffeemania: {
+  //   img: require('../assets/services/coffeemania.png'),
+  //   cat: 'Restaurants',
+  // },
+  // кофемания: {
+  //   img: require('../assets/services/coffeemania.png'),
+  //   cat: 'Restaurants',
+  // },
   'суши wok': {
     img: require('../assets/services/sushiwok.png'),
     cat: 'Restaurants',
