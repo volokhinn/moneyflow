@@ -8,6 +8,7 @@ export default function StatsScreen({ transactions }) {
   const [monthData, setMonthData] = useState([]);
   const [selectedPeriod, setSelectedPeriod] = useState('Last week');
   const [periodExpenses, setPeriodExpenses] = useState(0);
+  const [highlightedMonth, setHighlightedMonth] = useState(new Date().getMonth());
 
   useEffect(() => {
     fetchTransactionDataByMonth(transactions);
@@ -102,7 +103,7 @@ export default function StatsScreen({ transactions }) {
           <Text className="text-white text-4xl font-black mt-4 mx-4 mb-2">Statistics</Text>
           <Text className="text-white text-2xl font-black mt-4 mx-4">Balance stats by month</Text>
           <View>
-            <ScrollView horizontal={true} s className="mt-6 mb-4 rounded-full">
+            <ScrollView horizontal={true} className="mt-6 mb-4 rounded-full">
               <BarChart
                 backgroundColor="black"
                 data={{
@@ -120,7 +121,11 @@ export default function StatsScreen({ transactions }) {
                     'Nov',
                     'Dec',
                   ],
-                  datasets: [{ data: monthData }],
+                  datasets: [
+                    {
+                      data: monthData,
+                    },
+                  ],
                 }}
                 width={800}
                 height={200}
@@ -133,7 +138,10 @@ export default function StatsScreen({ transactions }) {
                   backgroundGradientFrom: 'black',
                   backgroundGradientTo: '#3434343d',
                   decimalPlaces: 0,
-                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                  color: (opacity = 1) =>
+                    highlightedMonth === new Date().getMonth()
+                      ? 'purple'
+                      : `rgba(255, 255, 255, ${opacity})`,
                   labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                   fillShadowGradient: 'gray',
                   fillShadowGradientOpacity: 0.5,
