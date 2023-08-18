@@ -582,10 +582,6 @@ export const getCategoryExpenses = (categoryName, transactions) => {
     const transactionCategory = keywordsToIcons[transaction.name.toLowerCase()]?.cat;
     const quickTransactionCategory = transaction.cat;
 
-    console.log('Transaction:', transaction.name);
-    console.log('Transaction Category:', transactionCategory);
-    console.log('Quick Transaction Category:', quickTransactionCategory);
-
     if (
       transaction.isIncome === false &&
       ((categoryName === 'Other' && !transactionCategory && !quickTransactionCategory) ||

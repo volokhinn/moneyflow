@@ -49,7 +49,6 @@ const AppNavigation = ({ isNewNewUser }) => {
     const checkIsNewUser = async () => {
       try {
         const isNewUserValue = await AsyncStorage.getItem('isNewUser');
-        console.log('isNewUser value:', isNewUserValue);
         setIsNewUser(isNewUserValue === 'true');
       } catch (error) {
         console.error('Error checking isNewUser:', error);
