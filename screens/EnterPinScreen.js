@@ -15,6 +15,20 @@ const EnterPinScreen = ({ navigation }) => {
   const [isChecking, setIsChecking] = useState(false);
   const [isPinCorrect, setIsPinCorrect] = useState(true);
   const [shakeAnimation] = useState(new Animated.Value(0));
+  const [isNewUser, setIsNewUser] = useState(false);
+
+  useEffect(() => {
+    checkIsNewUser();
+  }, []);
+
+  const checkIsNewUser = async () => {
+    try {
+      const newUserValue = await AsyncStorage.getItem('isNewUser');
+      setIsNewUser(newUserValue === 'true');
+    } catch (error) {
+      console.error('Error checking if new user:', error);
+    }
+  };
 
   const handleKeyPress = (key) => {
     if (isChecking) return;
@@ -36,8 +50,11 @@ const EnterPinScreen = ({ navigation }) => {
   const checkPin = useMemo(() => async () => {
     try {
       const savedPin = await AsyncStorage.getItem('pin');
-      if (enteredPin === savedPin) {
+      if (enteredPin === savedPin || (isNewUser && enteredPin.length === 4)) {
         setIsPinCorrect(true);
+        if (isNewUser) {
+          AsyncStorage.setItem('isNewUser', 'false'); // Установите значение для нового пользователя
+        }
         navigation.navigate('Home');
       } else {
         setIsPinCorrect(false);

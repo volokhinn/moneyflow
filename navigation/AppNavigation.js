@@ -20,7 +20,6 @@ import {
   AdjustmentsHorizontalIcon,
 } from 'react-native-heroicons/outline';
 import { PlusCircleIcon } from 'react-native-heroicons/solid';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 LogBox.ignoreLogs(['Non-serializable values were found in the navigation state']);
@@ -45,6 +44,33 @@ const AppNavigation = ({ isNewNewUser }) => {
 
     checkPinEntered();
   }, []);
+
+  useEffect(() => {
+    const checkIsNewUser = async () => {
+      try {
+        const isNewUserValue = await AsyncStorage.getItem('isNewUser');
+        console.log('isNewUser value:', isNewUserValue);
+        setIsNewUser(isNewUserValue === 'true');
+      } catch (error) {
+        console.error('Error checking isNewUser:', error);
+      }
+    };
+
+    checkIsNewUser();
+  }, []);
+
+  useEffect(() => {
+    const saveIsNewUser = async () => {
+      try {
+        await AsyncStorage.setItem('isNewUser', isNewUser.toString());
+      } catch (error) {
+        console.error('Error saving isNewUser:', error);
+      }
+    };
+
+    saveIsNewUser();
+  }, [isNewUser]);
+
   const openModal = () => {
     setModalVisible(true);
   };
@@ -130,7 +156,7 @@ const AppNavigation = ({ isNewNewUser }) => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={isNewNewUser ? 'Welcome' : 'EnterPin'}
+        initialRouteName={isNewUser ? 'Welcome' : 'EnterPin'}
         // initialRouteName={isNewUser ? 'CreatePin' : 'CreatePin'}
         screenOptions={{
           tabBarStyle: {
@@ -162,7 +188,7 @@ const AppNavigation = ({ isNewNewUser }) => {
             tabBarStyle: { display: 'none' },
             tabBarButton: () => <View style={{ width: 0, height: 0 }}></View>,
           }}>
-          {({ navigation }) => <EnterPinScreen navigation={navigation} />}
+          {({ navigation }) => <EnterPinScreen navigation={navigation} isNewUser={isNewUser} />}
         </Tab.Screen>
         <Tab.Screen
           name="FastTransaction"

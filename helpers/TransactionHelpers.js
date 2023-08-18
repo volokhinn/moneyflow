@@ -582,11 +582,15 @@ export const getCategoryExpenses = (categoryName, transactions) => {
     const transactionCategory = keywordsToIcons[transaction.name.toLowerCase()]?.cat;
     const quickTransactionCategory = transaction.cat;
 
+    console.log('Transaction:', transaction.name);
+    console.log('Transaction Category:', transactionCategory);
+    console.log('Quick Transaction Category:', quickTransactionCategory);
+
     if (
       transaction.isIncome === false &&
-      (transactionCategory === categoryName ||
-        (categoryName === 'Other' && !transaction.iconPath) ||
-        (categoryName === quickTransactionCategory && transaction.iconPath))
+      ((categoryName === 'Other' && !transactionCategory && !quickTransactionCategory) ||
+        transactionCategory === categoryName ||
+        (!transactionCategory && quickTransactionCategory === categoryName))
     ) {
       return total + transaction.amount;
     }
