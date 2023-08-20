@@ -12,25 +12,27 @@
 
 `Track every financial transaction, including expenses and income. Enter data quickly and easily.`
 
-![image](https://github.com/volokhinn/moneyflow/assets/57394725/f94b2e87-ecc1-4fd6-b73a-9708e1db5f94)
-
-**<li>Budgeting</li>**
-
-`Create monthly budgets for various categories and monitor their implementation.`
+<img src="https://github.com/volokhinn/moneyflow/assets/57394725/cf133bbf-e327-4db4-aad2-c69d6530a544" width="800px" />
+<img src="https://github.com/volokhinn/moneyflow/assets/57394725/879f5be5-3006-4e0c-b166-2218c682d456" width="800px" />
 
 **<li>Charts and Analytics</li>**
 
 `Get graphical reports and analyze your financial data to make informed decisions.`
 
-![iPhone](https://github.com/volokhinn/moneyflow/assets/57394725/1341a209-9ed1-43ae-a2f4-88b5a3c3a891)
+<img src="https://github.com/volokhinn/moneyflow/assets/57394725/1341a209-9ed1-43ae-a2f4-88b5a3c3a891" width="800px" />
+<img src="https://github.com/volokhinn/moneyflow/assets/57394725/60084b92-7d41-4d6d-a62b-019772a9b872" width="800px" />
 
 **<li>Categorization of transactions</li>**
 
 `Organize your transactions into categories to make it easier to understand where your budget goes.`
 
+<img src="https://github.com/volokhinn/moneyflow/assets/57394725/89109ec7-0b08-4e70-b671-209dfa26c94d" width="800px" />
+
 **<li>Password protection</li>**
 
 `Secure your finances with password protection.`
+
+<img src="https://github.com/volokhinn/moneyflow/assets/57394725/2ad3ab04-04a1-4764-8fb1-c6ca78ff3e5d" width="800px" />
 
 ## Technologies and libraries
 
